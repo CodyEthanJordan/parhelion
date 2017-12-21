@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 
 namespace Assets.Scripts
 {
-    class TurretControl : NetworkBehaviour
+    class TurretControl : MonoBehaviour
     {
         public GameObject Bullet;
         public float BulletVelocity = 10;
