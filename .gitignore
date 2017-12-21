@@ -18,6 +18,8 @@ ExportedObj/
 *.booproj
 *.svd
 
+# Ignore temp files from VS (added by Cody)
+.vs
 
 # Unity3D generated meta files
 *.pidb.meta
