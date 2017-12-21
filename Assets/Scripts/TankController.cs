@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class TankController : MonoBehaviour {
+public class TankController : NetworkBehaviour
+{
 
     public float RotationSpeed = 150.0f;
     public float Speed = 3.0f;
@@ -15,14 +17,24 @@ public class TankController : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
-        var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
-        cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
-		
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+    void Start()
+    {
+        if (isLocalPlayer)
+        {
+            var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
+            cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
+        }
+
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
 
