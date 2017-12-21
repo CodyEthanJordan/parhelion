@@ -3,51 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class TankController : NetworkBehaviour
+namespace Assets.Scripts
 {
-    public float RotationSpeed = 150.0f;
-    public float Speed = 3.0f;
-
-    private GameObject turret;
-    private Rigidbody2D rb;
-
-    private void Awake()
+    public class TankController : NetworkBehaviour
     {
-        rb = GetComponent<Rigidbody2D>();
-        turret = transform.GetChild(0).gameObject; //assume turret is only child
-    }
+        public float RotationSpeed = 150.0f;
+        public float Speed = 3.0f;
 
-    // Use this for initialization
-    void Start()
-    {
-        if (isLocalPlayer)
+        private GameObject turret;
+        private TurretControl turretControl;
+        private Rigidbody2D rb;
+
+        private void Awake()
         {
-            var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
-            cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
+            rb = GetComponent<Rigidbody2D>();
+            turret = transform.GetChild(0).gameObject; //assume turret is only child
+            turretControl = turret.GetComponent<TurretControl>();
         }
 
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (!isLocalPlayer)
+        // Use this for initialization
+        void Start()
         {
-            return;
+            if (isLocalPlayer)
+            {
+                var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
+                cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
+            }
+
         }
 
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
+        // Update is called once per frame
+        void FixedUpdate()
+        {
+            if (!isLocalPlayer)
+            {
+                return;
+            }
 
-        rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
-        rb.AddTorque(-x, ForceMode2D.Impulse);
+            var x = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
+            var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
 
-        // move turret
-        var mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(mosPos);
-        //turret.transform.LookAt(new Vector3(mosPos.x, mosPos.y, turret.transform.position.z), Vector3.fo);
-        var faceDirection = mosPos - turret.transform.position;
-        Debug.Log(faceDirection + " facing");
-        turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
+            rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
+            rb.AddTorque(-x, ForceMode2D.Impulse);
+
+            // move turret
+            var mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Debug.Log(mosPos);
+            //turret.transform.LookAt(new Vector3(mosPos.x, mosPos.y, turret.transform.position.z), Vector3.fo);
+            var faceDirection = mosPos - turret.transform.position;
+            Debug.Log(faceDirection + " facing");
+            turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
+        }
     }
 }
