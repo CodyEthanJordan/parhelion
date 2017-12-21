@@ -88,8 +88,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDrag: 4
+  m_AngularDrag: 50
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 1
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7ede0d4d1c0814e85dabef2cc805d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 150
-  Speed: 9
+  RotationSpeed: 9
+  Speed: 45
 --- !u!114 &114643591395709390
 MonoBehaviour:
   m_ObjectHideFlags: 1

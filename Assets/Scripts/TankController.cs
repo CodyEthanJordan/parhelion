@@ -7,8 +7,15 @@ public class TankController : MonoBehaviour {
     public float RotationSpeed = 150.0f;
     public float Speed = 3.0f;
 
-	// Use this for initialization
-	void Start () {
+    private Rigidbody2D rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    // Use this for initialization
+    void Start () {
         var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
         cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
 		
@@ -19,7 +26,9 @@ public class TankController : MonoBehaviour {
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
 
-        transform.Rotate(0, 0, -x);
-        transform.Translate(0, z, 0);
+        rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
+        rb.AddTorque(-x, ForceMode2D.Impulse);
+        //transform.Rotate(0, 0, -x);
+        //transform.Translate(0, z, 0);
     }
 }
