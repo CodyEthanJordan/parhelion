@@ -9,6 +9,7 @@ namespace Assets.Scripts
     {
         public float RotationSpeed = 150.0f;
         public float Speed = 3.0f;
+        public float Health = 10.0f;
 
         private GameObject turret;
         private TurretControl turretControl;
@@ -53,6 +54,12 @@ namespace Assets.Scripts
             var faceDirection = mosPos - turret.transform.position;
             Debug.Log(faceDirection + " facing");
             turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
+
+
+            if(Input.GetMouseButtonDown(0)) //fire the lasers!
+            {
+                turretControl.FireCannon();
+            }
         }
     }
 }
