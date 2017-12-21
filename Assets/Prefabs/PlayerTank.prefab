@@ -40,6 +40,8 @@ GameObject:
   - component: {fileID: 95606528872603156}
   - component: {fileID: 61980337597165270}
   - component: {fileID: 50891858241062360}
+  - component: {fileID: 114643591395709390}
+  - component: {fileID: 114312987288762524}
   m_Layer: 0
   m_Name: PlayerTank
   m_TagString: Player
@@ -153,6 +155,51 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114312987288762524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1118697516042032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7ede0d4d1c0814e85dabef2cc805d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 150
+  Speed: 5
+--- !u!114 &114643591395709390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1118697516042032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 167
+    i1: 102
+    i2: 163
+    i3: 168
+    i4: 194
+    i5: 220
+    i6: 179
+    i7: 36
+    i8: 8
+    i9: 156
+    i10: 222
+    i11: 120
+    i12: 77
+    i13: 135
+    i14: 213
+    i15: 63
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!212 &212070408035134914
 SpriteRenderer:
   m_ObjectHideFlags: 1
