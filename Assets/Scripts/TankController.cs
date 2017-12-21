@@ -9,6 +9,8 @@ public class TankController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
+        cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
 		
 	}
 	
