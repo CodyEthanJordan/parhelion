@@ -5,15 +5,16 @@ using UnityEngine.Networking;
 
 public class TankController : NetworkBehaviour
 {
-
     public float RotationSpeed = 150.0f;
     public float Speed = 3.0f;
 
+    private GameObject turret;
     private Rigidbody2D rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        turret = transform.GetChild(0).gameObject; //assume turret is only child
     }
 
     // Use this for initialization
@@ -40,7 +41,13 @@ public class TankController : NetworkBehaviour
 
         rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
         rb.AddTorque(-x, ForceMode2D.Impulse);
-        //transform.Rotate(0, 0, -x);
-        //transform.Translate(0, z, 0);
+
+        // move turret
+        var mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Debug.Log(mosPos);
+        //turret.transform.LookAt(new Vector3(mosPos.x, mosPos.y, turret.transform.position.z), Vector3.fo);
+        var faceDirection = mosPos - turret.transform.position;
+        Debug.Log(faceDirection + " facing");
+        turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
     }
 }
