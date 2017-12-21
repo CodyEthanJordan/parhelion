@@ -223,6 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1481140305490440, guid: 228b81bf8d127314eb4cd332adbcd4ff, type: 2}
   BulletVelocity: 2
+  ReloadDelay: 0.3
 --- !u!114 &114312987288762524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -301,10 +302,10 @@ MonoBehaviour:
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
+  m_Target: {fileID: 4819339007619908}
   m_ChildIndex: 0
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
+  m_SendInterval: 0.045454547
+  m_SyncRotationAxis: 3
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
   m_InterpolateRotation: 0.5

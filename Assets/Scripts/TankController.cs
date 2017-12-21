@@ -49,10 +49,8 @@ namespace Assets.Scripts
 
             // move turret
             var mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(mosPos);
             //turret.transform.LookAt(new Vector3(mosPos.x, mosPos.y, turret.transform.position.z), Vector3.fo);
             var faceDirection = mosPos - turret.transform.position;
-            Debug.Log(faceDirection + " facing");
             turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
 
 
