@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Assets.Scripts
 {
-    class TurretControl : MonoBehaviour
+    class TurretControl : NetworkBehaviour
     {
         public GameObject Bullet;
         public float BulletVelocity = 10;
@@ -27,6 +29,7 @@ namespace Assets.Scripts
             var bullet = Instantiate(Bullet, bulletSpawnPoint.position, transform.rotation);
             var bulletRB = bullet.GetComponent<Rigidbody2D>();
             bulletRB.AddRelativeForce(new Vector2(0, BulletVelocity), ForceMode2D.Impulse);
+            NetworkServer.Spawn(bullet);
         }
     }
 }

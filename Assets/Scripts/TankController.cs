@@ -58,8 +58,14 @@ namespace Assets.Scripts
 
             if(Input.GetMouseButtonDown(0)) //fire the lasers!
             {
-                turretControl.FireCannon();
+                CmdFire();
             }
+        }
+
+        [Command]
+        void CmdFire()
+        {
+            turretControl.FireCannon();
         }
     }
 }
