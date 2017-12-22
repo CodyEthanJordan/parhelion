@@ -10,6 +10,7 @@ namespace Assets.Scripts
     class BulletController : MonoBehaviour
     {
         public float Lifetime = 3;
+        public float Damage = 30;
 
         private float ttl = 0;
 
@@ -25,6 +26,16 @@ namespace Assets.Scripts
             if(ttl >= Lifetime)
             {
                 Destroy(gameObject);
+            }
+        }
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            var hit = collision.gameObject;
+            if(hit.CompareTag("Unit"))
+            {
+                Destroy(gameObject);
+                hit.GetComponent<TankController>().TakeDamage(Damage);
             }
         }
     }

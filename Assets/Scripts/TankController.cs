@@ -9,17 +9,20 @@ namespace Assets.Scripts
     {
         public float RotationSpeed = 150.0f;
         public float Speed = 3.0f;
-        public float Health = 10.0f;
+        [SyncVar(hook = "OnChangeHealth")]
+        public float Health = 100.0f;
 
         private GameObject turret;
         private TurretControl turretControl;
         private Rigidbody2D rb;
+        private SpriteRenderer sr;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             turret = transform.GetChild(0).gameObject; //assume turret is only child
             turretControl = turret.GetComponent<TurretControl>();
+            sr = GetComponent<SpriteRenderer>();
         }
 
         // Use this for initialization
@@ -30,7 +33,6 @@ namespace Assets.Scripts
                 var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
                 cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
             }
-
         }
 
         // Update is called once per frame
@@ -64,6 +66,26 @@ namespace Assets.Scripts
         void CmdFire()
         {
             turretControl.FireCannon();
+        }
+
+        public void TakeDamage(float amount)
+        {
+            if (!isServer)
+            {
+                return;
+            }
+
+            Health -= amount;
+
+            if (Health <= 0)
+            {
+                Health = 0;
+            }
+        }
+
+        void OnChangeHealth(float currentHealth)
+        {
+            sr.color = new Color(1, currentHealth / 100, currentHealth / 100); //TODO: make baased off max hp, make better UX
         }
     }
 }
