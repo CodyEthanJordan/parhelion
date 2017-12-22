@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1481140305490440, guid: 228b81bf8d127314eb4cd332adbcd4ff, type: 2}
-  BulletVelocity: 2
+  BulletVelocity: 2.5
   ReloadDelay: 0.3
 --- !u!114 &114683991248662430
 MonoBehaviour:
@@ -286,7 +286,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotationSpeed: 9
   Speed: 40
-  Health: 10
+  MaxHealth: 100
+  Health: 100
 --- !u!212 &212342837786938190
 SpriteRenderer:
   m_ObjectHideFlags: 1

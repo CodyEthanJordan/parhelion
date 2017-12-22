@@ -9,6 +9,7 @@ namespace Assets.Scripts
     {
         public float RotationSpeed = 150.0f;
         public float Speed = 3.0f;
+        public float MaxHealth = 100.0f;
         [SyncVar(hook = "OnChangeHealth")]
         public float Health = 100.0f;
 
@@ -79,13 +80,24 @@ namespace Assets.Scripts
 
             if (Health <= 0)
             {
-                Health = 0;
+                Health = MaxHealth;
+                RpcRespawn();
             }
         }
 
         void OnChangeHealth(float currentHealth)
         {
-            sr.color = new Color(1, currentHealth / 100, currentHealth / 100); //TODO: make baased off max hp, make better UX
+            sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth); //TODO: make baased off max hp, make better UX
+        }
+
+        [ClientRpc]
+        void RpcRespawn()
+        {
+            if (isLocalPlayer)
+            {
+                // move back to zero location
+                transform.position = Vector3.zero;
+            }
         }
     }
 }
