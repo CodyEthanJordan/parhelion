@@ -60,8 +60,9 @@ public class TankAgent : Agent
         {
             reward -= 0.001f;
             reward += (startingGoalDistance - currentDist) / startingGoalDistance;
-
         }
+
+        Monitor.Log("Reward", reward, MonitorType.text, null);
     }
 
     public override void AgentReset()

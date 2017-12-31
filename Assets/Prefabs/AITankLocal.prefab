@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61969565814831876}
   - component: {fileID: 50767378818010542}
   - component: {fileID: 114386139827678060}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AITankLocal
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 212162081806401060}
   - component: {fileID: 95849767856589298}
   - component: {fileID: 114447774896955314}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4698193833913406}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,14 +70,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1074108598705398}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.8174466, w: 0.57600445}
   m_LocalPosition: {x: -1.4049271, y: 1.5299345, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4642133169996418}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -109.66}
 --- !u!4 &4642133169996418
 Transform:
   m_ObjectHideFlags: 1
