@@ -36,13 +36,17 @@ public class TankAgent : Agent
         state.Add(transform.position.y);
         state.Add(Vector2.SignedAngle(transform.up, destination.transform.position - transform.position));
 
-        Debug.Log(state[0] + " " + +state[1] + "  " + state[2] + " " + state[3]);
 
         return state;
     }
 
     public override void AgentStep(float[] act)
     {
+        for (int i = 0; i < act.Length; i++)
+        {
+            act[i] = Mathf.Clamp(act[i], -1, 1);
+        }
+
         var horizontal = act[2] + act[3];
         var vertical = act[0] + act[1];
         var x = horizontal * Time.deltaTime * RotationSpeed;
@@ -60,7 +64,7 @@ public class TankAgent : Agent
         else
         {
             reward -= 0.01f;
-            reward += (startingGoalDistance - currentDist) / startingGoalDistance;
+            reward += (startingGoalDistance - currentDist) / startingGoalDistance / 10.0f;
         }
 
         Monitor.Log("Reward", reward, MonitorType.text, null);
