@@ -34,8 +34,9 @@ public class TankAgent : Agent
         List<float> state = new List<float>();
         state.Add(transform.position.x);
         state.Add(transform.position.y);
-        state.Add(destination.transform.position.x);
-        state.Add(destination.transform.position.y);
+        state.Add(Vector2.SignedAngle(transform.up, destination.transform.position - transform.position));
+
+        Debug.Log(state[0] + " " + +state[1] + "  " + state[2] + " " + state[3]);
 
         return state;
     }
