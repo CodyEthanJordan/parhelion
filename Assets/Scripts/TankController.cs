@@ -12,11 +12,13 @@ namespace Assets.Scripts
         public float MaxHealth = 100.0f;
         [SyncVar(hook = "OnChangeHealth")]
         public float Health = 100.0f;
+        public float CollectionTime = 0.1f;
 
         private GameObject turret;
         private TurretControl turretControl;
         private Rigidbody2D rb;
         private SpriteRenderer sr;
+        private float timeOnResource = 0f;
 
         private void Awake()
         {
@@ -57,7 +59,7 @@ namespace Assets.Scripts
             turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
 
 
-            if(Input.GetMouseButtonDown(0)) //fire the lasers!
+            if (Input.GetMouseButtonDown(0)) //fire the lasers!
             {
                 CmdFire();
             }
@@ -102,9 +104,27 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            
-            Debug.Log(collision.gameObject);
-            Destroy(collision.gameObject);
+
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Resource"))
+            {
+                timeOnResource += Time.deltaTime;
+
+                if (timeOnResource >= CollectionTime)
+                {
+                    timeOnResource = 0f;
+                    var resource = collision.gameObject.GetComponent<Resource>();
+                    resource.CollectResouce();
+                }
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            timeOnResource = 0f;
         }
 
     }

@@ -27,6 +27,7 @@ namespace Assets.Scripts
 
                 var r = Instantiate(ResourceToSpawn, randomVect, Quaternion.identity, this.transform);
                 NetworkServer.Spawn(r);
+
             }
         }
 

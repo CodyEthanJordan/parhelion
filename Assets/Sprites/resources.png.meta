@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: f07b399a6826321409b5e98534d11f76
-timeCreated: 1514745035
+timeCreated: 1514756694
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: resources_0
     21300002: resources_1
+    21300004: resources_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -93,6 +94,34 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: resources_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: resources_2
+      rect:
+        serializedVersion: 2
+        x: 64
         y: 32
         width: 32
         height: 32
