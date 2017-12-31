@@ -53,12 +53,12 @@ public class TankAgent : Agent
         var currentDist = Vector2.Distance(transform.position, destination.transform.position);
         if (currentDist <= 1)
         {
-            reward += 1;
+            reward += 100;
             done = true;
         }
         else
         {
-            reward -= 0.001f;
+            reward -= 0.01f;
             reward += (startingGoalDistance - currentDist) / startingGoalDistance;
         }
 
