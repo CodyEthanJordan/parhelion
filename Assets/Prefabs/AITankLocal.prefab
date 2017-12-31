@@ -207,6 +207,8 @@ MonoBehaviour:
   agentStoredAction: []
   memory: []
   id: 0
+  Speed: 40
+  RotationSpeed: 9
 --- !u!114 &114447774896955314
 MonoBehaviour:
   m_ObjectHideFlags: 1
