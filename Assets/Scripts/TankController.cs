@@ -99,5 +99,13 @@ namespace Assets.Scripts
                 transform.position = Vector3.zero;
             }
         }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            
+            Debug.Log(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
+
     }
 }
