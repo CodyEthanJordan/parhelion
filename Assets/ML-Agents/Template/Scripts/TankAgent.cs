@@ -13,6 +13,7 @@ public class TankAgent : Agent
     private SpriteRenderer sr;
     private GameObject turret;
     private TurretControl turretControl;
+    private float startingGoalDistance;
 
 
     public override void InitializeAgent()
@@ -24,6 +25,8 @@ public class TankAgent : Agent
         turret = transform.GetChild(0).gameObject; //assume turret is only child
         turretControl = turret.GetComponent<TurretControl>();
         sr = GetComponent<SpriteRenderer>();
+
+        startingGoalDistance = Vector2.Distance(transform.position, destination.transform.position);
     }
 
     public override List<float> CollectState()
@@ -47,11 +50,24 @@ public class TankAgent : Agent
         rb.AddTorque(-x, ForceMode2D.Impulse);
 
         //close to destination
+        var currentDist = Vector2.Distance(transform.position, destination.transform.position);
+        if (currentDist <= 1)
+        {
+            reward += 1;
+            done = true;
+        }
+        else
+        {
+            reward -= 0.001f;
+            reward += (startingGoalDistance - currentDist) / startingGoalDistance;
+
+        }
     }
 
     public override void AgentReset()
     {
         transform.position = Vector3.zero;
+        
     }
 
     public override void AgentOnDone()
