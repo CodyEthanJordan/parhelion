@@ -35,7 +35,7 @@ namespace Assets.Scripts
             if(hit.CompareTag("Unit"))
             {
                 Destroy(gameObject);
-                hit.GetComponent<TankController>().TakeDamage(Damage);
+                hit.GetComponent<Unit>().TakeDamage(Damage);
             }
         }
     }

@@ -18,13 +18,11 @@ namespace Assets.Scripts
     {
     }
 
-    public class TankController : NetworkBehaviour
+    public class TankController : Unit
     {
         public float RotationSpeed = 150.0f;
         public float Speed = 3.0f;
         public float MaxHealth = 100.0f;
-        [SyncVar(hook = "OnChangeHealth")]
-        public float Health = 100.0f;
         public float CollectionTime = 0.1f;
         public Dictionary<ResourceType, int> ResourceTanks;
         public int TankCapacity = 6;
@@ -108,7 +106,7 @@ namespace Assets.Scripts
             turretControl.FireCannon();
         }
 
-        public void TakeDamage(float amount)
+        public override void TakeDamage(float amount)
         {
             if (!isServer)
             {
@@ -124,7 +122,7 @@ namespace Assets.Scripts
             }
         }
 
-        void OnChangeHealth(float currentHealth)
+        protected override void OnChangedHealth(float currentHealth)
         {
             sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth); //TODO: make baased off max hp, make better UX
             HPChanged.Invoke(currentHealth, MaxHealth);
