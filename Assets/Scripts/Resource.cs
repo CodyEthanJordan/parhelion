@@ -24,6 +24,7 @@ namespace Assets.Scripts
 
         private SpriteRenderer sr;
 
+        [SyncVar(hook = "OnChangeType")]
         private ResourceType _type;
         public ResourceType Type
         {
@@ -34,6 +35,12 @@ namespace Assets.Scripts
                 UpdateColor();
             }
         }
+
+        private void OnChangeType(ResourceType r)
+        {
+            UpdateColor();
+        }
+
 
         private void UpdateColor()
         {
@@ -65,6 +72,11 @@ namespace Assets.Scripts
         {
             anim = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
+        }
+
+        private void Start()
+        {
+            UpdateColor();
         }
 
         public void CollectResouce()
