@@ -21,12 +21,12 @@ namespace Assets.Scripts
         private void Update()
         {
             timer += Time.deltaTime;
-            if(timer > SpawnRadius && transform.childCount < MaxSpawns)
+            if (timer > SpawnRadius && transform.childCount < MaxSpawns)
             {
                 timer = 0;
                 var randomVect = SpawnRadius * UnityEngine.Random.insideUnitCircle;
 
-                var r = Instantiate(ResourceToSpawn, randomVect, Quaternion.identity, this.transform);
+                var r = Instantiate(ResourceToSpawn, (Vector2)this.transform.position + randomVect, Quaternion.identity, this.transform);
                 r.GetComponent<Resource>().Type = TypeToSpawn;
                 NetworkServer.Spawn(r);
 
