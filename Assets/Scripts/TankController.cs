@@ -1,11 +1,23 @@
-﻿using System;
+﻿using Assets.Scripts.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace Assets.Scripts
 {
+    [System.Serializable]
+    public class UnityFloatEvent : UnityEvent<float, float>
+    {
+    }
+
+    [System.Serializable]
+    public class UnityResourceTankEvent : UnityEvent<Dictionary<ResourceType, int>, int>
+    {
+    }
+
     public class TankController : NetworkBehaviour
     {
         public float RotationSpeed = 150.0f;
@@ -16,6 +28,9 @@ namespace Assets.Scripts
         public float CollectionTime = 0.1f;
         public Dictionary<ResourceType, int> ResourceTanks;
         public int TankCapacity = 6;
+
+        public UnityFloatEvent HPChanged;
+        public UnityResourceTankEvent ResourcesChanged;
 
         private GameObject turret;
         private TurretControl turretControl;
@@ -29,6 +44,10 @@ namespace Assets.Scripts
             turret = transform.GetChild(0).gameObject; //assume turret is only child
             turretControl = turret.GetComponent<TurretControl>();
             sr = GetComponent<SpriteRenderer>();
+
+
+            HPChanged = new UnityFloatEvent();
+            ResourcesChanged = new UnityResourceTankEvent();
 
             // initialize tanks and set to 0
             ResourceTanks = new Dictionary<ResourceType, int>();
@@ -45,6 +64,14 @@ namespace Assets.Scripts
             {
                 var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
                 cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
+
+                var canvas = GameObject.FindGameObjectWithTag("UI");
+                var uiController = canvas.GetComponent<UIController>();
+                HPChanged.AddListener(uiController.HPUpdate);
+                HPChanged.Invoke(Health, MaxHealth);
+
+                ResourcesChanged.AddListener(uiController.ResourceUpdate);
+                ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
             }
         }
 
@@ -100,6 +127,7 @@ namespace Assets.Scripts
         void OnChangeHealth(float currentHealth)
         {
             sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth); //TODO: make baased off max hp, make better UX
+            HPChanged.Invoke(currentHealth, MaxHealth);
         }
 
         [ClientRpc]
@@ -137,9 +165,8 @@ namespace Assets.Scripts
                     {
                         resource.CollectResouce();
                         ResourceTanks[resource.Type] += 1;
+                        ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
                     }
-
-                    
                 }
             }
         }
