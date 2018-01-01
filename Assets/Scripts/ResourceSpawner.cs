@@ -27,6 +27,7 @@ namespace Assets.Scripts
                 var randomVect = SpawnRadius * UnityEngine.Random.insideUnitCircle;
 
                 var r = Instantiate(ResourceToSpawn, randomVect, Quaternion.identity, this.transform);
+                r.GetComponent<Resource>().Type = TypeToSpawn;
                 NetworkServer.Spawn(r);
 
             }

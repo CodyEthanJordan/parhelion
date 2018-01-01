@@ -34,12 +34,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4846521776431296}
+  - component: {fileID: 114926924482548944}
   - component: {fileID: 212342837786938190}
   - component: {fileID: 95080874643493330}
   - component: {fileID: 61918659796368918}
   - component: {fileID: 50288164660360742}
   - component: {fileID: 114289117594625616}
-  - component: {fileID: 114926924482548944}
   - component: {fileID: 114176008027002866}
   - component: {fileID: 114683991248662430}
   m_Layer: 0
@@ -288,6 +288,8 @@ MonoBehaviour:
   Speed: 40
   MaxHealth: 100
   Health: 100
+  CollectionTime: 1
+  TankCapacity: 6
 --- !u!212 &212342837786938190
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -320,7 +322,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2094424891
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6fc8219155a3c374a816501bf7cd547a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -364,7 +366,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2094424891
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300016, guid: 6fc8219155a3c374a816501bf7cd547a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
