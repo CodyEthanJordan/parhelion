@@ -21,8 +21,6 @@ namespace Assets.Scripts
     public class TankController : Unit
     {
         public float RotationSpeed = 150.0f;
-        public float Speed = 3.0f;
-        public float MaxHealth = 100.0f;
         public float CollectionTime = 0.1f;
         public Dictionary<ResourceType, int> ResourceTanks;
         public int TankCapacity = 6;
@@ -124,7 +122,7 @@ namespace Assets.Scripts
 
         protected override void OnChangedHealth(float currentHealth)
         {
-            sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth); //TODO: make baased off max hp, make better UX
+            sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth); 
             HPChanged.Invoke(currentHealth, MaxHealth);
         }
 

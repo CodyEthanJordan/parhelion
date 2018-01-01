@@ -14,6 +14,8 @@ namespace Assets.Scripts
     {
         [SyncVar(hook = "OnChangedHealth")]
         public float Health = 100.0f;
+        public float Speed = 3.0f;
+        public float MaxHealth = 100.0f;
 
         protected abstract void OnChangedHealth(float currentHealth);
         public abstract void TakeDamage(float damage);
