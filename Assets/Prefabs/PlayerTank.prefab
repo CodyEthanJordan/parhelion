@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationSpeed: 9
-  Speed: 40
+  Speed: 25
   MaxHealth: 100
   Health: 100
   CollectionTime: 1
