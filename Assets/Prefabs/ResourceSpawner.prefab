@@ -84,8 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a46f87bda89a0146b8b3095d7826004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeToSpawn: 2
   ResourceToSpawn: {fileID: 1878852718255846, guid: f144c181865eaa24aa061bc26b3b3ddf,
     type: 2}
-  SpawnRate: 1
+  SpawnRate: 0.1
   MaxSpawns: 5
   SpawnRadius: 3

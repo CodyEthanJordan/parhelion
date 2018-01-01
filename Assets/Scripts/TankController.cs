@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -13,6 +14,8 @@ namespace Assets.Scripts
         [SyncVar(hook = "OnChangeHealth")]
         public float Health = 100.0f;
         public float CollectionTime = 0.1f;
+        public Dictionary<ResourceType, int> ResourceTanks;
+        public int TankCapacity = 6;
 
         private GameObject turret;
         private TurretControl turretControl;
@@ -26,6 +29,13 @@ namespace Assets.Scripts
             turret = transform.GetChild(0).gameObject; //assume turret is only child
             turretControl = turret.GetComponent<TurretControl>();
             sr = GetComponent<SpriteRenderer>();
+
+            // initialize tanks and set to 0
+            ResourceTanks = new Dictionary<ResourceType, int>();
+            foreach (ResourceType r in Enum.GetValues(typeof(ResourceType)))
+            {
+                ResourceTanks.Add(r, 0);
+            }
         }
 
         // Use this for initialization
@@ -107,6 +117,11 @@ namespace Assets.Scripts
 
         }
 
+        private bool IsFull(ResourceType r)
+        {
+            return ResourceTanks[r] >= TankCapacity;
+        }
+
         private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Resource"))
@@ -117,7 +132,14 @@ namespace Assets.Scripts
                 {
                     timeOnResource = 0f;
                     var resource = collision.gameObject.GetComponent<Resource>();
-                    resource.CollectResouce();
+
+                    if (!IsFull(resource.Type))
+                    {
+                        resource.CollectResouce();
+                        ResourceTanks[resource.Type] += 1;
+                    }
+
+                    
                 }
             }
         }

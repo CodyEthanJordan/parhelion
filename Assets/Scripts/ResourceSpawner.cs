@@ -10,6 +10,7 @@ namespace Assets.Scripts
 {
     class ResourceSpawner : MonoBehaviour
     {
+        public ResourceType TypeToSpawn;
         public GameObject ResourceToSpawn;
         public float SpawnRate = 1f;
         public int MaxSpawns = 5;
