@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 1
-  m_SendInterval: 0.1
+  m_SendInterval: 1
   m_SyncRotationAxis: 3
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   Speed: 200
   MaxHealth: 40
   state: 0
+  stats: {fileID: 11400000, guid: 5cfc2a7721178c342aabccf49fc5837e, type: 2}
 --- !u!212 &212772473492897724
 SpriteRenderer:
   m_ObjectHideFlags: 1

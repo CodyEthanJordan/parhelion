@@ -109,8 +109,18 @@ namespace Assets.Scripts.AI
             //actually move
             xMove = Mathf.Clamp(xMove, -1, 1);
             yMove = Mathf.Clamp(yMove, -1, 1);
-            Debug.Log(xMove + " " + yMove);
             rb.AddForce(new Vector2(xMove, yMove) * stats.Speed * Time.deltaTime, ForceMode2D.Force);
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            var hit = collision.gameObject;
+            var unit = collision.gameObject.GetComponent<Unit>();
+            if(unit != null && unit.CompareTag("Player"))
+            {
+                this.GetComponent<Unit>().TakeDamage(stats.CollisionSelfDamage);
+                hit.GetComponent<Unit>().TakeDamage(stats.CollisionDamage);
+            }
         }
 
         private void OnDrawGizmosSelected()

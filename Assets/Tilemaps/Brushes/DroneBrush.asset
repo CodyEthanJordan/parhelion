@@ -8,13 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e30ac8c5939adb43ac0f5f77ac807fd, type: 3}
-  m_Name: BasicDroneStats
+  m_Script: {fileID: 11500000, guid: 2d5751a2c961df945a34295ccf5e576d, type: 3}
+  m_Name: DroneBrush
   m_EditorClassIdentifier: 
-  MaxHealth: 40
-  Speed: 200
-  ChaseThreshold: 4.6
-  WanderTime: 2
-  GiveUpDistanceThreshold: 5
-  CollisionDamage: 10
-  CollisionSelfDamage: 100
+  m_Prefabs:
+  - {fileID: 1403441686721754, guid: 4fb1cee2287b6fd4bb33b261a91bfcee, type: 2}
+  m_PerlinScale: 0.5
+  m_Z: 0

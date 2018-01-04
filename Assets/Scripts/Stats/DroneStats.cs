@@ -14,5 +14,7 @@ namespace Assets.Scripts.Stats
         public float ChaseThreshold;
         public float WanderTime;
         public float GiveUpDistanceThreshold;
+        public float CollisionDamage;
+        public float CollisionSelfDamage;
     }
 }

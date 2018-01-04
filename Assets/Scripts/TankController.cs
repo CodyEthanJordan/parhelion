@@ -92,7 +92,7 @@ namespace Assets.Scripts
             turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
 
 
-            if (Input.GetMouseButtonDown(0)) //fire the lasers!
+            if (Input.GetMouseButton(0)) //fire the lasers!
             {
                 CmdFire();
             }
