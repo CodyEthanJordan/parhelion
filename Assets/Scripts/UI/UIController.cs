@@ -40,108 +40,34 @@ namespace Assets.Scripts.UI
             Etherium.value = r[ResourceType.Etherium] / tankSize;
         }
 
-        internal void ToggleIndicator(string name, bool on)
+        public static Dictionary<TankSystem, List<string>> PowerupNames = new Dictionary<TankSystem, List<string>>
         {
-            if (name == "BlueEngine")
-            {
-                if (on)
-                {
-                    BlueEngine.color = Color.blue;
-                }
-                else
-                {
-                    BlueEngine.color = Color.white;
-                }
-            }
-            else if (name == "RedEngine")
-            {
-                if (on)
-                {
-                    RedEngine.color = Color.red;
-                }
-                else
-                {
-                    RedEngine.color = Color.white;
-                }
-            }
-            else if (name == "GreenEngine")
-            {
-                if (on)
-                {
-                    GreenEngine.color = Color.green;
-                }
-                else
-                {
-                    GreenEngine.color = Color.white;
-                }
-            }
-            else if (name == "BlueCannon")
-            {
-                if (on)
-                {
-                    BlueCannon.color = Color.blue;
-                }
-                else
-                {
-                    BlueCannon.color = Color.white;
-                }
-            }
-            else if (name == "RedCannon")
-            {
-                if (on)
-                {
-                    RedCannon.color = Color.red;
-                }
-                else
-                {
-                    RedCannon.color = Color.white;
-                }
-            }
-            else if (name == "GreenCannon")
-            {
-                if (on)
-                {
-                    GreenCannon.color = Color.green;
-                }
-                else
-                {
-                    GreenCannon.color = Color.white;
-                }
-            }
-            else if (name == "BlueForge")
-            {
-                if (on)
-                {
-                    BlueForge.color = Color.blue;
-                }
-                else
-                {
-                    BlueForge.color = Color.white;
-                }
-            }
-            else if (name == "RedForge")
-            {
-                if (on)
-                {
-                    RedForge.color = Color.red;
-                }
-                else
-                {
-                    RedForge.color = Color.white;
-                }
-            }
-            else if (name == "GreenForge")
-            {
-                if (on)
-                {
-                    GreenForge.color = Color.green;
-                }
-                else
-                {
-                    GreenForge.color = Color.white;
-                }
-            }
+            {TankSystem.Engine, new List<string>() {"Engine", "Speed", "Repair", "Sponson", "Sensor", "Lightning", "Blank", "Hovertank"} },
+            {TankSystem.Cannon, new List<string>() {} },
+            {TankSystem.Forge, new List<string>() {} },
+        };
+
+        public void UpdateSystemDisplay(Dictionary<ResourceType, Dictionary<TankSystem, bool>> SystemGrid)
+        {
+            BlueEngine.color = SystemGrid[ResourceType.Blue][TankSystem.Engine] ? Color.blue : Color.white;
+            RedEngine.color = SystemGrid[ResourceType.Red][TankSystem.Engine] ? Color.red : Color.white;
+            GreenEngine.color = SystemGrid[ResourceType.Green][TankSystem.Engine] ? Color.green : Color.white;
+            BlueCannon.color = SystemGrid[ResourceType.Blue][TankSystem.Cannon] ? Color.blue : Color.white;
+            RedCannon.color = SystemGrid[ResourceType.Red][TankSystem.Cannon] ? Color.red : Color.white;
+            GreenCannon.color = SystemGrid[ResourceType.Green][TankSystem.Cannon] ? Color.green : Color.white;
+            BlueForge.color = SystemGrid[ResourceType.Blue][TankSystem.Forge] ? Color.blue : Color.white;
+            RedForge.color = SystemGrid[ResourceType.Red][TankSystem.Forge] ? Color.red : Color.white;
+            GreenForge.color = SystemGrid[ResourceType.Green][TankSystem.Forge] ? Color.green : Color.white;
+
+            int engineName = (SystemGrid[ResourceType.Red][TankSystem.Engine] ? 1 : 0) 
+                + (SystemGrid[ResourceType.Green][TankSystem.Engine] ? 2 : 0)
+                + (SystemGrid[ResourceType.Blue][TankSystem.Engine] ? 4 : 0);
+
+            
+
         }
+
+    
     }
 }
 

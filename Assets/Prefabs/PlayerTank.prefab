@@ -290,6 +290,7 @@ MonoBehaviour:
   RotationSpeed: 9
   CollectionTime: 1
   TankCapacity: 6
+  powerupStats: {fileID: 11400000, guid: e61f2cf217b2e804881995e32cccd356, type: 2}
   HPChanged:
     m_PersistentCalls:
       m_Calls: []

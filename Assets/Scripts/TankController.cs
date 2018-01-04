@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.UI;
+﻿using Assets.Scripts.Stats;
+using Assets.Scripts.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,8 +34,11 @@ namespace Assets.Scripts
         public Dictionary<ResourceType, Dictionary<TankSystem, bool>> SystemGrid;
         public float TankCapacity = 6;
 
+        [SerializeField] private TankSystemPowerups powerupStats;
+
         public UnityFloatEvent HPChanged;
         public UnityResourceTankEvent ResourcesChanged;
+
 
         private GameObject turret;
         private TurretControl turretControl;
@@ -59,7 +63,7 @@ namespace Assets.Scripts
             ResourceTanks = new Dictionary<ResourceType, float>();
             foreach (ResourceType r in Enum.GetValues(typeof(ResourceType)))
             {
-                ResourceTanks.Add(r, 0);
+                ResourceTanks.Add(r, 6);
             }
 
             SystemGrid = new Dictionary<ResourceType, Dictionary<TankSystem, bool>>();
@@ -91,6 +95,14 @@ namespace Assets.Scripts
             }
         }
 
+        private bool SystemActive(TankSystem tankSystem, bool blue, bool red, bool green)
+        {
+            return SystemGrid[ResourceType.Blue][tankSystem] == blue &&
+                SystemGrid[ResourceType.Red][tankSystem] == red &&
+                SystemGrid[ResourceType.Green][tankSystem] == green;
+        }
+
+
         // Update is called once per frame
         void Update()
         {
@@ -99,8 +111,18 @@ namespace Assets.Scripts
                 return;
             }
 
+            ValidateSuffecientResourceCounts();
+
             var x = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
             var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
+
+            // POWERUP: speed boost
+            if(SystemActive(TankSystem.Engine, blue: false, red: true, green: false))
+            {
+                ResourceTanks[ResourceType.Red] -= Time.deltaTime * powerupStats.EngineRedCost;
+                ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
+                z *= powerupStats.SpeedBoostMultiplier;
+            }
 
             rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
             rb.AddTorque(-x, ForceMode2D.Impulse);
@@ -163,6 +185,41 @@ namespace Assets.Scripts
                 uiController.ToggleIndicator("GreenForge", SystemGrid[ResourceType.Green][TankSystem.Forge]);
             }
 
+        }
+
+        private void ValidateSuffecientResourceCounts()
+        {
+            //check resource counts
+            if (ResourceTanks[ResourceType.Blue] <= 0)
+            {
+                ResourceTanks[ResourceType.Blue] = 0;
+                SystemGrid[ResourceType.Blue][TankSystem.Engine] = false;
+                uiController.ToggleIndicator("BlueEngine", SystemGrid[ResourceType.Blue][TankSystem.Engine]);
+                SystemGrid[ResourceType.Blue][TankSystem.Cannon] = false;
+                uiController.ToggleIndicator("BlueCannon", SystemGrid[ResourceType.Blue][TankSystem.Cannon]);
+                SystemGrid[ResourceType.Blue][TankSystem.Forge] = false;
+                uiController.ToggleIndicator("BlueForge", SystemGrid[ResourceType.Blue][TankSystem.Forge]);
+            }
+            if (ResourceTanks[ResourceType.Green] <= 0)
+            {
+                ResourceTanks[ResourceType.Green] = 0;
+                SystemGrid[ResourceType.Green][TankSystem.Engine] = false;
+                uiController.ToggleIndicator("GreenEngine", SystemGrid[ResourceType.Green][TankSystem.Engine]);
+                SystemGrid[ResourceType.Green][TankSystem.Cannon] = false;
+                uiController.ToggleIndicator("GreenCannon", SystemGrid[ResourceType.Green][TankSystem.Cannon]);
+                SystemGrid[ResourceType.Green][TankSystem.Forge] = false;
+                uiController.ToggleIndicator("GreenForge", SystemGrid[ResourceType.Green][TankSystem.Forge]);
+            }
+            if (ResourceTanks[ResourceType.Red] <= 0)
+            {
+                ResourceTanks[ResourceType.Red] = 0;
+                SystemGrid[ResourceType.Red][TankSystem.Engine] = false;
+                uiController.ToggleIndicator("RedEngine", SystemGrid[ResourceType.Red][TankSystem.Engine]);
+                SystemGrid[ResourceType.Red][TankSystem.Cannon] = false;
+                uiController.ToggleIndicator("RedCannon", SystemGrid[ResourceType.Red][TankSystem.Cannon]);
+                SystemGrid[ResourceType.Red][TankSystem.Forge] = false;
+                uiController.ToggleIndicator("RedForge", SystemGrid[ResourceType.Red][TankSystem.Forge]);
+            }
         }
 
         private void GridUpdate()
