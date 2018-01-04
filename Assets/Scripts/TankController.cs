@@ -104,7 +104,7 @@ namespace Assets.Scripts
 
         private bool SpendResources(ResourceType resourceType, float amount)
         {
-            if(ResourceTanks[resourceType] < amount)
+            if (ResourceTanks[resourceType] < amount)
             {
                 return false;
             }
@@ -128,7 +128,7 @@ namespace Assets.Scripts
             var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
 
             // POWERUP: speed boost
-            if(SystemActive(TankSystem.Engine, blue: false, red: true, green: false))
+            if (SystemActive(TankSystem.Engine, blue: false, red: true, green: false))
             {
                 SpendResources(ResourceType.Red, Time.deltaTime * powerupStats.EngineRedCost);
                 z *= powerupStats.SpeedBoostMultiplier;
@@ -203,9 +203,11 @@ namespace Assets.Scripts
             }
 
             // use forge
-            if(Input.GetButtonDown("UseForge") || Input.GetMouseButtonDown(1))
+            if (Input.GetButtonDown("UseForge") || Input.GetMouseButtonDown(1))
             {
-                if(SystemActive(TankSystem.Forge, blue: false, green: true, red: false) && SpendResources(ResourceType.Green, powerupStats.ForgeGreenCost))
+                if (SystemActive(TankSystem.Forge, blue: false, green: true, red: false)
+                    && (Physics2D.OverlapCircle(mosPos, 2, LayerMask.GetMask("Terrain")) == null)
+                    && SpendResources(ResourceType.Green, powerupStats.ForgeGreenCost))
                 {
                     transform.position = mosPos;
                 }

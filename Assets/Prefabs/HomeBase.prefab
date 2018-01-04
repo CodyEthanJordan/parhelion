@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224963052068303536}
   - component: {fileID: 222687283454737358}
   - component: {fileID: 114233679461047576}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4624861121247144}
   - component: {fileID: 61621909039458156}
   - component: {fileID: 114051231731703156}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ResourceDropoff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 60539916485370358}
   - component: {fileID: 114634818442902092}
   - component: {fileID: 114463053248374322}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HomeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 223376656920633444}
   - component: {fileID: 114406348577788794}
   - component: {fileID: 114783256655860466}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
