@@ -8201,7 +8201,7 @@ Prefab:
     - target: {fileID: 224219837505182548, guid: a919eea7c4fb3e8489af61a834aabb1f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 224219837505182548, guid: a919eea7c4fb3e8489af61a834aabb1f,
         type: 2}
@@ -8341,7 +8341,7 @@ Prefab:
     - target: {fileID: 224219837505182548, guid: a919eea7c4fb3e8489af61a834aabb1f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75.77332
       objectReference: {fileID: 0}
     - target: {fileID: 224219837505182548, guid: a919eea7c4fb3e8489af61a834aabb1f,
         type: 2}
@@ -9064,6 +9064,7 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 1481140305490440, guid: 228b81bf8d127314eb4cd332adbcd4ff, type: 2}
   - {fileID: 1878852718255846, guid: f144c181865eaa24aa061bc26b3b3ddf, type: 2}
+  - {fileID: 1739153116775984, guid: 6b4da44911f47154090356196ea322b0, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -49384,7 +49385,7 @@ Prefab:
     - target: {fileID: 224219837505182548, guid: a919eea7c4fb3e8489af61a834aabb1f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -37.88666
       objectReference: {fileID: 0}
     - target: {fileID: 224219837505182548, guid: a919eea7c4fb3e8489af61a834aabb1f,
         type: 2}
@@ -50103,6 +50104,34 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a919eea7c4fb3e8489af61a834aabb1f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1454937223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1454937224}
+  m_Layer: 0
+  m_Name: TownPortalTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1454937224
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1454937223}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1473024284
 GameObject:
   m_ObjectHideFlags: 0

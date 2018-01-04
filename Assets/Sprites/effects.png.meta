@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 25f4d44894ab79f459ad7fcf103d6206
-timeCreated: 1513885181
+timeCreated: 1515051855
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: effects_0
+    21300002: effects_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -92,9 +93,23 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 44
+        y: 108
         width: 8
         height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: effects_1
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 38
+        width: 51
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

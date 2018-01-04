@@ -39,6 +39,8 @@ namespace Assets.Scripts
         public UnityFloatEvent HPChanged;
         public UnityResourceTankEvent ResourcesChanged;
 
+        public GameObject TownPortalPrefab;
+
 
         private GameObject turret;
         private TurretControl turretControl;
@@ -128,9 +130,10 @@ namespace Assets.Scripts
             var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
 
             // POWERUP: speed boost
-            if (SystemActive(TankSystem.Engine, blue: false, red: true, green: false))
+            if (SystemActive(TankSystem.Engine, blue: false, red: true, green: false)
+                && z != 0
+                && SpendResources(ResourceType.Red, Time.deltaTime * powerupStats.EngineRedCost))
             {
-                SpendResources(ResourceType.Red, Time.deltaTime * powerupStats.EngineRedCost);
                 z *= powerupStats.SpeedBoostMultiplier;
             }
 

@@ -301,6 +301,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Assets.Scripts.UnityResourceTankEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  TownPortalPrefab: {fileID: 1739153116775984, guid: 6b4da44911f47154090356196ea322b0,
+    type: 2}
 --- !u!212 &212342837786938190
 SpriteRenderer:
   m_ObjectHideFlags: 1
