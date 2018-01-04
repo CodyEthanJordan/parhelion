@@ -49,13 +49,14 @@ namespace Assets.Scripts
             ResourceTanks = new Dictionary<ResourceType, int>();
             foreach (ResourceType r in Enum.GetValues(typeof(ResourceType)))
             {
-                ResourceTanks.Add(r, 0);
+                ResourceTanks.Add(r, 1);
             }
         }
 
         // Use this for initialization
         void Start()
         {
+            Debug.Log("hello");
             if (isLocalPlayer)
             {
                 var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
@@ -74,6 +75,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void FixedUpdate()
         {
+            Debug.Log("hello");
             if (!isLocalPlayer)
             {
                 return;
@@ -136,10 +138,16 @@ namespace Assets.Scripts
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        [ClientRpc]
+        public void EmptyEtherium()
         {
-
+            if(isLocalPlayer)
+            {
+                ResourceTanks[ResourceType.Etherium] = 0;
+                ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
+            }
         }
+
 
         private bool IsFull(ResourceType r)
         {
@@ -148,6 +156,7 @@ namespace Assets.Scripts
 
         private void OnTriggerStay2D(Collider2D collision)
         {
+            Debug.Log("tank inside collider");
             if (collision.gameObject.CompareTag("Resource"))
             {
                 timeOnResource += Time.deltaTime;
@@ -169,6 +178,7 @@ namespace Assets.Scripts
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+            Debug.Log("tank leaving collider");
             timeOnResource = 0f;
         }
 
