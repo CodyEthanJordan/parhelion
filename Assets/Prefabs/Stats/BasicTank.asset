@@ -11,4 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ebba32da832c24292b54cd25c5646e, type: 3}
   m_Name: BasicTank
   m_EditorClassIdentifier: 
-  EngineRedCost: 0.5
+  EngineRedCost: 0.1
+  SpeedBoostMultiplier: 2

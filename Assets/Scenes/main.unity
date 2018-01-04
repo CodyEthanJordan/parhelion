@@ -50161,7 +50161,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 2fde291d27656bf41904694b435b387d, type: 3}
     m_FontSize: 29
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 0
@@ -50799,7 +50799,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 2fde291d27656bf41904694b435b387d, type: 3}
     m_FontSize: 29
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 0
@@ -50873,7 +50873,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 2fde291d27656bf41904694b435b387d, type: 3}
     m_FontSize: 29
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 0
@@ -51002,6 +51002,9 @@ MonoBehaviour:
   Blue: {fileID: 654036884}
   Red: {fileID: 1240056924}
   Green: {fileID: 528442719}
+  EngineText: {fileID: 1854447892}
+  CannonText: {fileID: 1473024286}
+  ForgeText: {fileID: 1892583723}
   BlueEngine: {fileID: 32228665}
   RedEngine: {fileID: 504439000}
   GreenEngine: {fileID: 1339679557}

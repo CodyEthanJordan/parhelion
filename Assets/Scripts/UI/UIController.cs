@@ -17,6 +17,10 @@ namespace Assets.Scripts.UI
         public Slider Red;
         public Slider Green;
 
+        public Text EngineText;
+        public Text CannonText;
+        public Text ForgeText;
+
         public Image BlueEngine;
         public Image RedEngine;
         public Image GreenEngine;
@@ -43,8 +47,8 @@ namespace Assets.Scripts.UI
         public static Dictionary<TankSystem, List<string>> PowerupNames = new Dictionary<TankSystem, List<string>>
         {
             {TankSystem.Engine, new List<string>() {"Engine", "Speed", "Repair", "Sponson", "Sensor", "Lightning", "Blank", "Hovertank"} },
-            {TankSystem.Cannon, new List<string>() {} },
-            {TankSystem.Forge, new List<string>() {} },
+            {TankSystem.Cannon, new List<string>() {"Cannon", "Laser", "Repair-Beam", "Rocket", "Machinegun", "Triple", "Drill", "DEATH RAY"} },
+            {TankSystem.Forge, new List<string>() {"Forge", "Missiles", "Blink", "Blank", "Wall", "Attack Drone", "Turret", "Town Portal"} },
         };
 
         public void UpdateSystemDisplay(Dictionary<ResourceType, Dictionary<TankSystem, bool>> SystemGrid)
@@ -59,15 +63,26 @@ namespace Assets.Scripts.UI
             RedForge.color = SystemGrid[ResourceType.Red][TankSystem.Forge] ? Color.red : Color.white;
             GreenForge.color = SystemGrid[ResourceType.Green][TankSystem.Forge] ? Color.green : Color.white;
 
-            int engineName = (SystemGrid[ResourceType.Red][TankSystem.Engine] ? 1 : 0) 
+            int engineName = (SystemGrid[ResourceType.Red][TankSystem.Engine] ? 1 : 0)
                 + (SystemGrid[ResourceType.Green][TankSystem.Engine] ? 2 : 0)
                 + (SystemGrid[ResourceType.Blue][TankSystem.Engine] ? 4 : 0);
 
-            
+            EngineText.text = PowerupNames[TankSystem.Engine][engineName];
 
+            int cannonName = (SystemGrid[ResourceType.Red][TankSystem.Cannon] ? 1 : 0)
+                + (SystemGrid[ResourceType.Green][TankSystem.Cannon] ? 2 : 0)
+                + (SystemGrid[ResourceType.Blue][TankSystem.Cannon] ? 4 : 0);
+
+            CannonText.text = PowerupNames[TankSystem.Cannon][cannonName];
+
+            int forgeName = (SystemGrid[ResourceType.Red][TankSystem.Forge] ? 1 : 0)
+                + (SystemGrid[ResourceType.Green][TankSystem.Forge] ? 2 : 0)
+                + (SystemGrid[ResourceType.Blue][TankSystem.Forge] ? 4 : 0);
+
+            ForgeText.text = PowerupNames[TankSystem.Forge][forgeName];
         }
 
-    
+
     }
 }
 

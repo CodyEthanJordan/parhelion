@@ -142,47 +142,47 @@ namespace Assets.Scripts
             if (Input.GetButtonDown("BlueEngine"))
             {
                 SystemGrid[ResourceType.Blue][TankSystem.Engine] = !SystemGrid[ResourceType.Blue][TankSystem.Engine];
-                uiController.ToggleIndicator("BlueEngine", SystemGrid[ResourceType.Blue][TankSystem.Engine]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("RedEngine"))
             {
                 SystemGrid[ResourceType.Red][TankSystem.Engine] = !SystemGrid[ResourceType.Red][TankSystem.Engine];
-                uiController.ToggleIndicator("RedEngine", SystemGrid[ResourceType.Red][TankSystem.Engine]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("GreenEngine"))
             {
                 SystemGrid[ResourceType.Green][TankSystem.Engine] = !SystemGrid[ResourceType.Green][TankSystem.Engine];
-                uiController.ToggleIndicator("GreenEngine", SystemGrid[ResourceType.Green][TankSystem.Engine]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("BlueCannon"))
             {
                 SystemGrid[ResourceType.Blue][TankSystem.Cannon] = !SystemGrid[ResourceType.Blue][TankSystem.Cannon];
-                uiController.ToggleIndicator("BlueCannon", SystemGrid[ResourceType.Blue][TankSystem.Cannon]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("RedCannon"))
             {
                 SystemGrid[ResourceType.Red][TankSystem.Cannon] = !SystemGrid[ResourceType.Red][TankSystem.Cannon];
-                uiController.ToggleIndicator("RedCannon", SystemGrid[ResourceType.Red][TankSystem.Cannon]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("GreenCannon"))
             {
                 SystemGrid[ResourceType.Green][TankSystem.Cannon] = !SystemGrid[ResourceType.Green][TankSystem.Cannon];
-                uiController.ToggleIndicator("GreenCannon", SystemGrid[ResourceType.Green][TankSystem.Cannon]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("BlueForge"))
             {
                 SystemGrid[ResourceType.Blue][TankSystem.Forge] = !SystemGrid[ResourceType.Blue][TankSystem.Forge];
-                uiController.ToggleIndicator("BlueForge", SystemGrid[ResourceType.Blue][TankSystem.Forge]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("RedForge"))
             {
                 SystemGrid[ResourceType.Red][TankSystem.Forge] = !SystemGrid[ResourceType.Red][TankSystem.Forge];
-                uiController.ToggleIndicator("RedForge", SystemGrid[ResourceType.Red][TankSystem.Forge]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             else if (Input.GetButtonDown("GreenForge"))
             {
                 SystemGrid[ResourceType.Green][TankSystem.Forge] = !SystemGrid[ResourceType.Green][TankSystem.Forge];
-                uiController.ToggleIndicator("GreenForge", SystemGrid[ResourceType.Green][TankSystem.Forge]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
 
         }
@@ -194,31 +194,25 @@ namespace Assets.Scripts
             {
                 ResourceTanks[ResourceType.Blue] = 0;
                 SystemGrid[ResourceType.Blue][TankSystem.Engine] = false;
-                uiController.ToggleIndicator("BlueEngine", SystemGrid[ResourceType.Blue][TankSystem.Engine]);
                 SystemGrid[ResourceType.Blue][TankSystem.Cannon] = false;
-                uiController.ToggleIndicator("BlueCannon", SystemGrid[ResourceType.Blue][TankSystem.Cannon]);
                 SystemGrid[ResourceType.Blue][TankSystem.Forge] = false;
-                uiController.ToggleIndicator("BlueForge", SystemGrid[ResourceType.Blue][TankSystem.Forge]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             if (ResourceTanks[ResourceType.Green] <= 0)
             {
                 ResourceTanks[ResourceType.Green] = 0;
                 SystemGrid[ResourceType.Green][TankSystem.Engine] = false;
-                uiController.ToggleIndicator("GreenEngine", SystemGrid[ResourceType.Green][TankSystem.Engine]);
                 SystemGrid[ResourceType.Green][TankSystem.Cannon] = false;
-                uiController.ToggleIndicator("GreenCannon", SystemGrid[ResourceType.Green][TankSystem.Cannon]);
                 SystemGrid[ResourceType.Green][TankSystem.Forge] = false;
-                uiController.ToggleIndicator("GreenForge", SystemGrid[ResourceType.Green][TankSystem.Forge]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
             if (ResourceTanks[ResourceType.Red] <= 0)
             {
                 ResourceTanks[ResourceType.Red] = 0;
                 SystemGrid[ResourceType.Red][TankSystem.Engine] = false;
-                uiController.ToggleIndicator("RedEngine", SystemGrid[ResourceType.Red][TankSystem.Engine]);
                 SystemGrid[ResourceType.Red][TankSystem.Cannon] = false;
-                uiController.ToggleIndicator("RedCannon", SystemGrid[ResourceType.Red][TankSystem.Cannon]);
                 SystemGrid[ResourceType.Red][TankSystem.Forge] = false;
-                uiController.ToggleIndicator("RedForge", SystemGrid[ResourceType.Red][TankSystem.Forge]);
+                uiController.UpdateSystemDisplay(SystemGrid);
             }
         }
 
