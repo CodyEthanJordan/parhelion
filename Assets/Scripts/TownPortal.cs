@@ -24,13 +24,15 @@ namespace Assets.Scripts
         {
             Timer += Time.deltaTime;
 
-            if(Timer >= PortalWindupTime)
+            if (Timer >= PortalWindupTime)
             {
-                var stuff = Physics2D.OverlapCircle(this.transform.position, 2);
-                while(stuff != null)
+                var stuff = Physics2D.OverlapCircle(this.transform.position, 2, LayerMask.GetMask("Unit"));
+                while (stuff != null)
                 {
                     stuff.transform.position = destination + (Vector3)UnityEngine.Random.insideUnitCircle;
+                    stuff = Physics2D.OverlapCircle(this.transform.position, 2, LayerMask.GetMask("Unit"));
                 }
+                Destroy(gameObject);
             }
         }
     }
