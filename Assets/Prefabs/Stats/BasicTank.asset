@@ -12,6 +12,25 @@ MonoBehaviour:
   m_Name: BasicTank
   m_EditorClassIdentifier: 
   EngineRedCost: 0.1
-  SpeedBoostMultiplier: 2
   EngineGreenCost: 0.5
+  EngineBlueCost: 0
+  EngineRedGreenCost: 0
+  EngineRedBlueCost: 0
+  EngineGreenBlueCost: 0
+  EngineRedGreenBlueCost: 0
+  CannonRedCost: 0
+  CannonGreenCost: 0
+  CannonBlueCost: 0
+  CannonRedGreenCost: 0
+  CannonRedBlueCost: 0
+  CannonGreenBlueCost: 0
+  CannonRedGreenBlueCost: 0
+  ForgeRedCost: 0
+  ForgeGreenCost: 1
+  ForgeBlueCost: 0
+  ForgeRedGreenCost: 0
+  ForgeRedBlueCost: 0
+  ForgeGreenBlueCost: 0
+  ForgeRedGreenBlueCost: 0
   SelfRepairAmount: 5
+  SpeedBoostMultiplier: 2

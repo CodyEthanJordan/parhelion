@@ -253,7 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1481140305490440, guid: 228b81bf8d127314eb4cd332adbcd4ff, type: 2}
   BulletVelocity: 3.5
-  ReloadDelay: 0.01
+  ReloadDelay: 0.2
 --- !u!114 &114683991248662430
 MonoBehaviour:
   m_ObjectHideFlags: 1

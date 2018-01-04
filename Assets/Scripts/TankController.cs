@@ -102,11 +102,16 @@ namespace Assets.Scripts
                 SystemGrid[ResourceType.Green][tankSystem] == green;
         }
 
-        private void SpendResources(ResourceType resourceType, float amount)
+        private bool SpendResources(ResourceType resourceType, float amount)
         {
+            if(ResourceTanks[resourceType] < amount)
+            {
+                return false;
+            }
             ResourceTanks[resourceType] -= amount;
             ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
             ValidateSuffecientResourceCounts();
+            return true;
         }
 
         // Update is called once per frame
@@ -195,6 +200,15 @@ namespace Assets.Scripts
             {
                 SystemGrid[ResourceType.Green][TankSystem.Forge] = !SystemGrid[ResourceType.Green][TankSystem.Forge];
                 uiController.UpdateSystemDisplay(SystemGrid);
+            }
+
+            // use forge
+            if(Input.GetButtonDown("UseForge") || Input.GetMouseButtonDown(1))
+            {
+                if(SystemActive(TankSystem.Forge, blue: false, green: true, red: false) && SpendResources(ResourceType.Green, powerupStats.ForgeGreenCost))
+                {
+                    transform.position = mosPos;
+                }
             }
 
         }
