@@ -131,7 +131,7 @@ namespace Assets.Scripts
                 return false;
             }
 
-            if(blue)
+            if (blue)
             {
                 ResourceTanks[ResourceType.Blue] -= amount;
             }
@@ -245,11 +245,10 @@ namespace Assets.Scripts
                 {
                     transform.position = mosPos;
                 }
-                else if (SystemActive(TankSystem.Forge, blue: true, green: true, red: true) 
+                else if (SystemActive(TankSystem.Forge, blue: true, green: true, red: true)
                     && SpendResources(powerupStats.ForgeRedGreenBlueCost, blue: true, green: true, red: true))
                 {
-                    var portal = Instantiate(TownPortalPrefab, this.transform.position, Quaternion.identity);
-                    NetworkServer.Spawn(portal);
+                    CmdSpawnTownPortal();
                 }
             }
 
@@ -295,6 +294,13 @@ namespace Assets.Scripts
             turretControl.FireCannon();
         }
 
+        [Command]
+        void CmdSpawnTownPortal()
+        {
+            var portal = Instantiate(TownPortalPrefab, this.transform.position, Quaternion.identity);
+            NetworkServer.Spawn(portal);
+        }
+
         public override void TakeDamage(float amount)
         {
             if (!isServer)
@@ -335,6 +341,12 @@ namespace Assets.Scripts
                 ResourceTanks[ResourceType.Etherium] = 0;
                 ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
             }
+        }
+
+        [ClientRpc]
+        public void RpcTeleportTo(Vector3 pos)
+        {
+            this.transform.position = pos;
         }
 
 
