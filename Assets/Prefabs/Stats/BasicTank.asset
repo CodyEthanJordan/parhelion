@@ -31,6 +31,6 @@ MonoBehaviour:
   ForgeRedGreenCost: 0
   ForgeRedBlueCost: 0
   ForgeGreenBlueCost: 0
-  ForgeRedGreenBlueCost: 0
+  ForgeRedGreenBlueCost: 5
   SelfRepairAmount: 5
   SpeedBoostMultiplier: 2

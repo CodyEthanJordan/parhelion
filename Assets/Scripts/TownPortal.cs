@@ -23,7 +23,7 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if(!isServer)
+            if (!isServer)
             {
                 return; // have s
             }
@@ -32,32 +32,31 @@ namespace Assets.Scripts
 
             if (Timer >= PortalWindupTime)
             {
-                var stuff = Physics2D.OverlapCircle(this.transform.position, PortalSize, LayerMask.GetMask("Unit"));
-                while (stuff != null)
+                var AllStuff = Physics2D.OverlapCircleAll(this.transform.position, PortalSize, LayerMask.GetMask("Unit"));
+                foreach (var stuff in AllStuff)
                 {
                     var networkIdentity = stuff.GetComponent<NetworkIdentity>();
-                    if(networkIdentity == null)
+                    if (networkIdentity == null)
                     {
                         Debug.LogError("Why doesn't this object have a network identity? " + stuff.gameObject.name);
                     }
                     else if (networkIdentity.hasAuthority)
                     {
-                    stuff.transform.position = destination + (Vector3)UnityEngine.Random.insideUnitCircle;
+                        stuff.transform.position = destination + stuff.transform.position - this.transform.position;
                     }
                     else
                     {
                         // this is probably a player then
                         var tankController = stuff.GetComponent<TankController>();
-                        if(tankController == null)
+                        if (tankController == null)
                         {
                             Debug.LogError("what doesn't the server have authority over which isn't a player? " + stuff.gameObject.name);
                         }
                         else
                         {
-                            tankController.RpcTeleportTo(destination + (Vector3)UnityEngine.Random.insideUnitCircle);
+                            tankController.RpcTeleportTo(destination + stuff.transform.position - this.transform.position);
                         }
                     }
-                    stuff = Physics2D.OverlapCircle(this.transform.position, PortalSize, LayerMask.GetMask("Unit"));
                 }
                 Destroy(gameObject);
             }

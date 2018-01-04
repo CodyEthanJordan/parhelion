@@ -144,6 +144,8 @@ namespace Assets.Scripts
                 ResourceTanks[ResourceType.Green] -= amount;
             }
 
+            ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
+            ValidateSuffecientResourceCounts();
             return true;
         }
 
