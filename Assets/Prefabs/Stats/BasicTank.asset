@@ -13,3 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EngineRedCost: 0.1
   SpeedBoostMultiplier: 2
+  EngineGreenCost: 0.5
+  SelfRepairAmount: 5

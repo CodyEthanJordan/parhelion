@@ -13,5 +13,7 @@ namespace Assets.Scripts.Stats
     {
         public float EngineRedCost;
         public float SpeedBoostMultiplier;
+        public float EngineGreenCost;
+        public float SelfRepairAmount;
     }
 }

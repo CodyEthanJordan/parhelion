@@ -33,7 +33,7 @@ namespace Assets.Scripts.UI
 
         public void HPUpdate(float hp, float maxHP)
         {
-            HP.text = "HP: " + hp + "/" + maxHP;
+            HP.text = "HP: " + hp.ToString("N0") + "/" + maxHP;
         }
 
         public void ResourceUpdate(Dictionary<ResourceType, float> r, float tankSize)

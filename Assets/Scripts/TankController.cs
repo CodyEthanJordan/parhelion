@@ -102,6 +102,12 @@ namespace Assets.Scripts
                 SystemGrid[ResourceType.Green][tankSystem] == green;
         }
 
+        private void SpendResources(ResourceType resourceType, float amount)
+        {
+            ResourceTanks[resourceType] -= amount;
+            ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
+            ValidateSuffecientResourceCounts();
+        }
 
         // Update is called once per frame
         void Update()
@@ -119,9 +125,15 @@ namespace Assets.Scripts
             // POWERUP: speed boost
             if(SystemActive(TankSystem.Engine, blue: false, red: true, green: false))
             {
-                ResourceTanks[ResourceType.Red] -= Time.deltaTime * powerupStats.EngineRedCost;
-                ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
+                SpendResources(ResourceType.Red, Time.deltaTime * powerupStats.EngineRedCost);
                 z *= powerupStats.SpeedBoostMultiplier;
+            }
+
+            // POWERUP: repair
+            if (SystemActive(TankSystem.Engine, blue: false, red: false, green: true) && Health < MaxHealth)
+            {
+                SpendResources(ResourceType.Green, powerupStats.EngineGreenCost * Time.deltaTime);
+                Health = Math.Min(MaxHealth, Health + Time.deltaTime * powerupStats.SelfRepairAmount);
             }
 
             rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
