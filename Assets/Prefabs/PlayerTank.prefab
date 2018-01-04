@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 114683991248662430}
   m_Layer: 0
   m_Name: PlayerTank
-  m_TagString: Unit
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -284,12 +284,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7ede0d4d1c0814e85dabef2cc805d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 9
+  Health: 100
   Speed: 25
   MaxHealth: 100
-  Health: 100
+  RotationSpeed: 9
   CollectionTime: 1
   TankCapacity: 6
+  HPChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Assets.Scripts.UnityFloatEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ResourcesChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Assets.Scripts.UnityResourceTankEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!212 &212342837786938190
 SpriteRenderer:
   m_ObjectHideFlags: 1

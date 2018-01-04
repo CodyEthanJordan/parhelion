@@ -32,7 +32,8 @@ namespace Assets.Scripts
         void OnCollisionEnter2D(Collision2D collision)
         {
             var hit = collision.gameObject;
-            if(hit.CompareTag("Unit"))
+            var unit = collision.gameObject.GetComponent<Unit>();
+            if(unit != null)
             {
                 Destroy(gameObject);
                 hit.GetComponent<Unit>().TakeDamage(Damage);
