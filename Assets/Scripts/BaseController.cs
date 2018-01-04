@@ -14,7 +14,7 @@ namespace Assets.Scripts
     {
         public Text EtheriumText;
         [SyncVar(hook = "OnChangedEtherium")]
-        public int Etherium = 0;
+        public float Etherium = 0;
 
         internal void TankAtHopper(GameObject hit)
         {
@@ -56,14 +56,9 @@ namespace Assets.Scripts
 
         }
 
-        private void OnChangedEtherium(int current)
+        private void OnChangedEtherium(float current)
         {
             EtheriumText.text = current + "/";
-        }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            Debug.Log("building hit");
         }
     }
 }

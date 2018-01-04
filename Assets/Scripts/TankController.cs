@@ -14,16 +14,24 @@ namespace Assets.Scripts
     }
 
     [System.Serializable]
-    public class UnityResourceTankEvent : UnityEvent<Dictionary<ResourceType, int>, int>
+    public class UnityResourceTankEvent : UnityEvent<Dictionary<ResourceType, float>, float>
     {
+    }
+
+    public enum TankSystem
+    {
+        Engine,
+        Cannon,
+        Forge
     }
 
     public class TankController : Unit
     {
         public float RotationSpeed = 150.0f;
         public float CollectionTime = 0.1f;
-        public Dictionary<ResourceType, int> ResourceTanks;
-        public int TankCapacity = 6;
+        public Dictionary<ResourceType, float> ResourceTanks;
+        public Dictionary<ResourceType, Dictionary<TankSystem, bool>> SystemGrid;
+        public float TankCapacity = 6;
 
         public UnityFloatEvent HPChanged;
         public UnityResourceTankEvent ResourcesChanged;
@@ -33,6 +41,8 @@ namespace Assets.Scripts
         private Rigidbody2D rb;
         private SpriteRenderer sr;
         private float timeOnResource = 0f;
+
+        private UIController uiController;
 
         private void Awake()
         {
@@ -46,10 +56,20 @@ namespace Assets.Scripts
             ResourcesChanged = new UnityResourceTankEvent();
 
             // initialize tanks and set to 0
-            ResourceTanks = new Dictionary<ResourceType, int>();
+            ResourceTanks = new Dictionary<ResourceType, float>();
             foreach (ResourceType r in Enum.GetValues(typeof(ResourceType)))
             {
-                ResourceTanks.Add(r, 1);
+                ResourceTanks.Add(r, 0);
+            }
+
+            SystemGrid = new Dictionary<ResourceType, Dictionary<TankSystem, bool>>();
+            foreach (ResourceType r in Enum.GetValues(typeof(ResourceType)))
+            {
+                SystemGrid.Add(r, new Dictionary<TankSystem, bool>());
+                foreach (TankSystem sys in Enum.GetValues(typeof(TankSystem)))
+                {
+                    SystemGrid[r].Add(sys, false);
+                }
             }
         }
 
@@ -62,7 +82,7 @@ namespace Assets.Scripts
                 cinemachine.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = transform;
 
                 var canvas = GameObject.FindGameObjectWithTag("UI");
-                var uiController = canvas.GetComponent<UIController>();
+                uiController = canvas.GetComponent<UIController>();
                 HPChanged.AddListener(uiController.HPUpdate);
                 HPChanged.Invoke(Health, MaxHealth);
 
@@ -72,7 +92,7 @@ namespace Assets.Scripts
         }
 
         // Update is called once per frame
-        void FixedUpdate()
+        void Update()
         {
             if (!isLocalPlayer)
             {
@@ -96,6 +116,58 @@ namespace Assets.Scripts
             {
                 CmdFire();
             }
+
+            if (Input.GetButtonDown("BlueEngine"))
+            {
+                SystemGrid[ResourceType.Blue][TankSystem.Engine] = !SystemGrid[ResourceType.Blue][TankSystem.Engine];
+                uiController.ToggleIndicator("BlueEngine", SystemGrid[ResourceType.Blue][TankSystem.Engine]);
+            }
+            else if (Input.GetButtonDown("RedEngine"))
+            {
+                SystemGrid[ResourceType.Red][TankSystem.Engine] = !SystemGrid[ResourceType.Red][TankSystem.Engine];
+                uiController.ToggleIndicator("RedEngine", SystemGrid[ResourceType.Red][TankSystem.Engine]);
+            }
+            else if (Input.GetButtonDown("GreenEngine"))
+            {
+                SystemGrid[ResourceType.Green][TankSystem.Engine] = !SystemGrid[ResourceType.Green][TankSystem.Engine];
+                uiController.ToggleIndicator("GreenEngine", SystemGrid[ResourceType.Green][TankSystem.Engine]);
+            }
+            else if (Input.GetButtonDown("BlueCannon"))
+            {
+                SystemGrid[ResourceType.Blue][TankSystem.Cannon] = !SystemGrid[ResourceType.Blue][TankSystem.Cannon];
+                uiController.ToggleIndicator("BlueCannon", SystemGrid[ResourceType.Blue][TankSystem.Cannon]);
+            }
+            else if (Input.GetButtonDown("RedCannon"))
+            {
+                SystemGrid[ResourceType.Red][TankSystem.Cannon] = !SystemGrid[ResourceType.Red][TankSystem.Cannon];
+                uiController.ToggleIndicator("RedCannon", SystemGrid[ResourceType.Red][TankSystem.Cannon]);
+            }
+            else if (Input.GetButtonDown("GreenCannon"))
+            {
+                SystemGrid[ResourceType.Green][TankSystem.Cannon] = !SystemGrid[ResourceType.Green][TankSystem.Cannon];
+                uiController.ToggleIndicator("GreenCannon", SystemGrid[ResourceType.Green][TankSystem.Cannon]);
+            }
+            else if (Input.GetButtonDown("BlueForge"))
+            {
+                SystemGrid[ResourceType.Blue][TankSystem.Forge] = !SystemGrid[ResourceType.Blue][TankSystem.Forge];
+                uiController.ToggleIndicator("BlueForge", SystemGrid[ResourceType.Blue][TankSystem.Forge]);
+            }
+            else if (Input.GetButtonDown("RedForge"))
+            {
+                SystemGrid[ResourceType.Red][TankSystem.Forge] = !SystemGrid[ResourceType.Red][TankSystem.Forge];
+                uiController.ToggleIndicator("RedForge", SystemGrid[ResourceType.Red][TankSystem.Forge]);
+            }
+            else if (Input.GetButtonDown("GreenForge"))
+            {
+                SystemGrid[ResourceType.Green][TankSystem.Forge] = !SystemGrid[ResourceType.Green][TankSystem.Forge];
+                uiController.ToggleIndicator("GreenForge", SystemGrid[ResourceType.Green][TankSystem.Forge]);
+            }
+
+        }
+
+        private void GridUpdate()
+        {
+
         }
 
         [Command]
@@ -122,7 +194,7 @@ namespace Assets.Scripts
 
         protected override void OnChangedHealth(float currentHealth)
         {
-            sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth); 
+            sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth);
             HPChanged.Invoke(currentHealth, MaxHealth);
         }
 
@@ -139,7 +211,7 @@ namespace Assets.Scripts
         [ClientRpc]
         public void RpcEmptyEtherium()
         {
-            if(isLocalPlayer)
+            if (isLocalPlayer)
             {
                 ResourceTanks[ResourceType.Etherium] = 0;
                 ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
@@ -154,7 +226,7 @@ namespace Assets.Scripts
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if(!isLocalPlayer)
+            if (!isLocalPlayer)
             {
                 return; //only local players handle gathering resources
             }
