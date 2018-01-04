@@ -16,6 +16,21 @@ namespace Assets.Scripts
         [SyncVar(hook = "OnChangedEtherium")]
         public int Etherium = 0;
 
+        internal void TankAtHopper(GameObject hit)
+        {
+            if(!isServer)
+            {
+                return; //only do this on single server instance
+            }
+
+            if(hit.CompareTag("Player"))
+            {
+                var player = hit.GetComponent<TankController>();
+                Etherium += player.ResourceTanks[ResourceType.Etherium];
+                player.RpcEmptyEtherium();
+            }
+        }
+
         private void Start()
         {
             OnChangedEtherium(0);
@@ -50,23 +65,5 @@ namespace Assets.Scripts
         {
             Debug.Log("building hit");
         }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            Debug.Log("trig hit");
-            if(!isServer)
-            {
-                return; //only do this on single server instance
-            }
-
-            var hit = collision.gameObject;
-            if(hit.CompareTag("Player"))
-            {
-                var player = hit.GetComponent<TankController>();
-                Etherium += player.ResourceTanks[ResourceType.Etherium];
-                player.EmptyEtherium();
-            }
-        }
-
     }
 }

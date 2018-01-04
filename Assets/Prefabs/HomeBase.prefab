@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4624861121247144}
   - component: {fileID: 61621909039458156}
+  - component: {fileID: 114051231731703156}
   m_Layer: 0
   m_Name: ResourceDropoff
   m_TagString: Untagged
@@ -166,6 +167,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9826299, y: 0.98931885}
   m_EdgeRadius: 0
+--- !u!114 &114051231731703156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1121458422244154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4b1b3a66cdb3a41b720a98c1fecb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bc: {fileID: 114634818442902092}
 --- !u!114 &114233679461047576
 MonoBehaviour:
   m_ObjectHideFlags: 1

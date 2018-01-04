@@ -29,7 +29,6 @@ namespace Assets.Scripts
 
         public void FireCannon()
         {
-            Debug.LogError("hel!p");
             if(lastShot < ReloadDelay)
             {
                 // still reloading, do nothing

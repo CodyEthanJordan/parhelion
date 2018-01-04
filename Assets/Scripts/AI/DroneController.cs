@@ -61,6 +61,10 @@ namespace Assets.Scripts.AI
 
         private void Update()
         {
+            if(!isServer)
+            {
+                return;
+            }
             //Think about what to do
             //state transitions? actions
             var playerArray = GameObject.FindGameObjectsWithTag("Player");

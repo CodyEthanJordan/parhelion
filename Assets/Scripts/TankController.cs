@@ -56,7 +56,6 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
-            Debug.Log("hello");
             if (isLocalPlayer)
             {
                 var cinemachine = GameObject.FindGameObjectWithTag("Cinemachine");
@@ -75,7 +74,6 @@ namespace Assets.Scripts
         // Update is called once per frame
         void FixedUpdate()
         {
-            Debug.Log("hello");
             if (!isLocalPlayer)
             {
                 return;
@@ -139,7 +137,7 @@ namespace Assets.Scripts
         }
 
         [ClientRpc]
-        public void EmptyEtherium()
+        public void RpcEmptyEtherium()
         {
             if(isLocalPlayer)
             {
@@ -156,7 +154,10 @@ namespace Assets.Scripts
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            Debug.Log("tank inside collider");
+            if(!isLocalPlayer)
+            {
+                return; //only local players handle gathering resources
+            }
             if (collision.gameObject.CompareTag("Resource"))
             {
                 timeOnResource += Time.deltaTime;
@@ -178,7 +179,6 @@ namespace Assets.Scripts
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            Debug.Log("tank leaving collider");
             timeOnResource = 0f;
         }
 
