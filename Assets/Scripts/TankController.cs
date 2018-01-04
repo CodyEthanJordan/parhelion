@@ -116,6 +116,37 @@ namespace Assets.Scripts
             return true;
         }
 
+        private bool SpendResources(float amount, bool blue, bool red, bool green)
+        {
+            if (blue && ResourceTanks[ResourceType.Blue] < amount)
+            {
+                return false;
+            }
+            if (red && ResourceTanks[ResourceType.Red] < amount)
+            {
+                return false;
+            }
+            if (green && ResourceTanks[ResourceType.Green] < amount)
+            {
+                return false;
+            }
+
+            if(blue)
+            {
+                ResourceTanks[ResourceType.Blue] -= amount;
+            }
+            if (red)
+            {
+                ResourceTanks[ResourceType.Red] -= amount;
+            }
+            if (green)
+            {
+                ResourceTanks[ResourceType.Green] -= amount;
+            }
+
+            return true;
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -213,6 +244,12 @@ namespace Assets.Scripts
                     && SpendResources(ResourceType.Green, powerupStats.ForgeGreenCost))
                 {
                     transform.position = mosPos;
+                }
+                else if (SystemActive(TankSystem.Forge, blue: true, green: true, red: true) 
+                    && SpendResources(powerupStats.ForgeRedGreenBlueCost, blue: true, green: true, red: true))
+                {
+                    var portal = Instantiate(TownPortalPrefab, this.transform.position, Quaternion.identity);
+                    NetworkServer.Spawn(portal);
                 }
             }
 
