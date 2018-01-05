@@ -61,7 +61,6 @@ GameObject:
   - component: {fileID: 95408347968365980}
   - component: {fileID: 114674982365776544}
   - component: {fileID: 120284573832671436}
-  - component: {fileID: 114106015433908896}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -189,38 +188,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114106015433908896
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1476989334160706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 167
-    i1: 102
-    i2: 163
-    i3: 168
-    i4: 194
-    i5: 220
-    i6: 179
-    i7: 36
-    i8: 8
-    i9: 156
-    i10: 222
-    i11: 120
-    i12: 77
-    i13: 135
-    i14: 213
-    i15: 63
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &114176008027002866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -324,6 +291,7 @@ MonoBehaviour:
   RotationSpeed: 9
   CollectionTime: 1
   TankCapacity: 6
+  ReloadDelay: 0.5
   powerupStats: {fileID: 11400000, guid: e61f2cf217b2e804881995e32cccd356, type: 2}
   HPChanged:
     m_PersistentCalls:
