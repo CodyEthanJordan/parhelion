@@ -34,6 +34,7 @@ namespace Assets.Scripts
         public Dictionary<ResourceType, Dictionary<TankSystem, bool>> SystemGrid;
         public float TankCapacity = 6;
         public float ReloadDelay = 0.5f;
+        public GameObject BulletPrefab;
 
         [SerializeField] private TankSystemPowerups powerupStats;
 
@@ -157,6 +158,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
+            lastShot += Time.deltaTime;
             if (!isLocalPlayer)
             {
                 return;
@@ -194,8 +196,19 @@ namespace Assets.Scripts
 
             if (Input.GetMouseButton(0)) //fire the lasers!
             {
-                //CmdFire();
-                CmdFireLaser();
+                if(SystemActive(TankSystem.Cannon, blue: false, red: true, green: false) 
+                    && lastShot >= powerupStats.LaserReloadSpeed
+                    && SpendResources(ResourceType.Red, powerupStats.CannonRedCost))
+                {
+                    lastShot = 0f;
+                    CmdFireLaser();
+                }
+                else if(lastShot >= powerupStats.BaseCannonReloadSpeed)
+                {
+                    lastShot = 0f;
+                    CmdFire();
+                }
+             
             }
 
             if (Input.GetButtonDown("BlueEngine"))
@@ -291,15 +304,15 @@ namespace Assets.Scripts
             }
         }
 
-        private void GridUpdate()
-        {
-
-        }
-
         [Command]
         private void CmdFire()
         {
-            turretControl.FireCannon();
+            lastShot = 0f;
+            var bullet = Instantiate(BulletPrefab, bulletSpawnPoint.position, transform.rotation);
+            var bulletRB = bullet.GetComponent<Rigidbody2D>();
+            bullet.GetComponent<BulletController>().Damage = powerupStats.BaseCannonDamage;
+            bulletRB.AddRelativeForce(new Vector2(0, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+            NetworkServer.Spawn(bullet);
         }
 
         [Command]
@@ -311,30 +324,25 @@ namespace Assets.Scripts
                 return;
             }
 
-            var hit = Physics2D.Raycast(bulletSpawnPoint.position, transform.up, 30);
-            if (hit != null)
+            var hit = Physics2D.Raycast(bulletSpawnPoint.position, turret.transform.up, 30);
+            RpcLaserEffects(bulletSpawnPoint.position, hit.point);
+            if (hit.collider != null)
             {
-                Debug.Log("shooting laser");
-                Debug.Log(bulletSpawnPoint.position);
-                Debug.Log(hit.point);
-                //RpcLaserEffects(bulletSpawnPoint.position, hit.point);
-                RpcLaserEffects();
                 var unit = hit.collider.gameObject.GetComponent<Unit>();
                 if (unit != null)
                 {
-                    unit.TakeDamage(10); //TODO: laser damage amount
+                    unit.TakeDamage(50); //TODO: laser damage amount
                 }
             }
         }
 
 
         [ClientRpc]
-        private void RpcLaserEffects()
+        private void RpcLaserEffects(Vector3 start, Vector3 end)
         {
-            Debug.Log("client calls");
             lr.enabled = true;
-            lr.SetPosition(0, bulletSpawnPoint.position);
-            lr.SetPosition(1, Vector3.zero);
+            lr.SetPosition(0, start);
+            lr.SetPosition(1, end);
             StartCoroutine(DisableLaser(0.1f));
         }
 

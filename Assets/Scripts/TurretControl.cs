@@ -72,16 +72,7 @@ namespace Assets.Scripts
 
         public void FireCannon()
         {
-            if(lastShot < ReloadDelay)
-            {
-                // still reloading, do nothing
-                return;
-            }
-            lastShot = 0f;
-            var bullet = Instantiate(Bullet, bulletSpawnPoint.position, transform.rotation);
-            var bulletRB = bullet.GetComponent<Rigidbody2D>();
-            bulletRB.AddRelativeForce(new Vector2(0, BulletVelocity), ForceMode2D.Impulse);
-            NetworkServer.Spawn(bullet);
+           
         }
     }
 }

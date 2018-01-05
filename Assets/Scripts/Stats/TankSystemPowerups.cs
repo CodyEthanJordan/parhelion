@@ -33,7 +33,13 @@ namespace Assets.Scripts.Stats
         public float ForgeGreenBlueCost;
         public float ForgeRedGreenBlueCost;
 
+        public float BaseCannonDamage;
+        public float BaseCannonReloadSpeed;
+        public float BaseCannonBulletVelocity;
+
         public float SelfRepairAmount;
         public float SpeedBoostMultiplier;
+        public float LaserDamage;
+        public float LaserReloadSpeed;
     }
 }
