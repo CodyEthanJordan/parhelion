@@ -33,6 +33,7 @@ namespace Assets.Scripts
         public Dictionary<ResourceType, float> ResourceTanks;
         public Dictionary<ResourceType, Dictionary<TankSystem, bool>> SystemGrid;
         public float TankCapacity = 6;
+        public float ReloadDelay = 0.5f;
 
         [SerializeField] private TankSystemPowerups powerupStats;
 
@@ -43,10 +44,13 @@ namespace Assets.Scripts
 
 
         private GameObject turret;
+        private Transform bulletSpawnPoint;
         private TurretControl turretControl;
+        private LineRenderer lr;
         private Rigidbody2D rb;
         private SpriteRenderer sr;
         private float timeOnResource = 0f;
+        private float lastShot;
 
         private UIController uiController;
 
@@ -54,9 +58,10 @@ namespace Assets.Scripts
         {
             rb = GetComponent<Rigidbody2D>();
             turret = transform.GetChild(0).gameObject; //assume turret is only child
+            bulletSpawnPoint = turret.transform.GetChild(0);
             turretControl = turret.GetComponent<TurretControl>();
             sr = GetComponent<SpriteRenderer>();
-
+            lr = turret.GetComponent<LineRenderer>();
 
             HPChanged = new UnityFloatEvent();
             ResourcesChanged = new UnityResourceTankEvent();
@@ -189,7 +194,8 @@ namespace Assets.Scripts
 
             if (Input.GetMouseButton(0)) //fire the lasers!
             {
-                CmdFire();
+                //CmdFire();
+                CmdFireLaser();
             }
 
             if (Input.GetButtonDown("BlueEngine"))
@@ -242,8 +248,8 @@ namespace Assets.Scripts
             if (Input.GetButtonDown("UseForge") || Input.GetMouseButtonDown(1))
             {
                 if (SystemActive(TankSystem.Forge, blue: false, green: true, red: false)
-                    && (Physics2D.OverlapCircle(mosPos, 2, LayerMask.GetMask("Terrain")) == null)
-                    && SpendResources(ResourceType.Green, powerupStats.ForgeGreenCost))
+                    && (Physics2D.OverlapCircle(mosPos, 0.5f, LayerMask.GetMask("Terrain")) == null)
+                    && SpendResources(ResourceType.Green, powerupStats.ForgeGreenCost)) //TODO: can teleport in to walls
                 {
                     transform.position = mosPos;
                 }
@@ -291,9 +297,51 @@ namespace Assets.Scripts
         }
 
         [Command]
-        void CmdFire()
+        private void CmdFire()
         {
             turretControl.FireCannon();
+        }
+
+        [Command]
+        private void CmdFireLaser()
+        {
+            if (lastShot < ReloadDelay)
+            {
+                // still reloading, do nothing
+                return;
+            }
+
+            var hit = Physics2D.Raycast(bulletSpawnPoint.position, transform.up, 30);
+            if (hit != null)
+            {
+                Debug.Log("shooting laser");
+                Debug.Log(bulletSpawnPoint.position);
+                Debug.Log(hit.point);
+                //RpcLaserEffects(bulletSpawnPoint.position, hit.point);
+                RpcLaserEffects();
+                var unit = hit.collider.gameObject.GetComponent<Unit>();
+                if (unit != null)
+                {
+                    unit.TakeDamage(10); //TODO: laser damage amount
+                }
+            }
+        }
+
+
+        [ClientRpc]
+        private void RpcLaserEffects()
+        {
+            Debug.Log("client calls");
+            lr.enabled = true;
+            lr.SetPosition(0, bulletSpawnPoint.position);
+            lr.SetPosition(1, Vector3.zero);
+            StartCoroutine(DisableLaser(0.1f));
+        }
+
+        private IEnumerator DisableLaser(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            lr.enabled = false;
         }
 
         [Command]
