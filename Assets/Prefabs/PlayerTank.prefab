@@ -292,6 +292,8 @@ MonoBehaviour:
   CollectionTime: 1
   TankCapacity: 6
   ReloadDelay: 0.5
+  BulletPrefab: {fileID: 1481140305490440, guid: 228b81bf8d127314eb4cd332adbcd4ff,
+    type: 2}
   powerupStats: {fileID: 11400000, guid: e61f2cf217b2e804881995e32cccd356, type: 2}
   HPChanged:
     m_PersistentCalls:

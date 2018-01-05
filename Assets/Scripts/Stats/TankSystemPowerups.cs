@@ -41,5 +41,6 @@ namespace Assets.Scripts.Stats
         public float SpeedBoostMultiplier;
         public float LaserDamage;
         public float LaserReloadSpeed;
+        public float LaserRange;
     }
 }

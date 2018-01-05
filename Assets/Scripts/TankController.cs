@@ -196,19 +196,19 @@ namespace Assets.Scripts
 
             if (Input.GetMouseButton(0)) //fire the lasers!
             {
-                if(SystemActive(TankSystem.Cannon, blue: false, red: true, green: false) 
+                if (SystemActive(TankSystem.Cannon, blue: false, red: true, green: false)
                     && lastShot >= powerupStats.LaserReloadSpeed
                     && SpendResources(ResourceType.Red, powerupStats.CannonRedCost))
                 {
                     lastShot = 0f;
                     CmdFireLaser();
                 }
-                else if(lastShot >= powerupStats.BaseCannonReloadSpeed)
+                else if (lastShot >= powerupStats.BaseCannonReloadSpeed)
                 {
                     lastShot = 0f;
                     CmdFire();
                 }
-             
+
             }
 
             if (Input.GetButtonDown("BlueEngine"))
@@ -308,7 +308,7 @@ namespace Assets.Scripts
         private void CmdFire()
         {
             lastShot = 0f;
-            var bullet = Instantiate(BulletPrefab, bulletSpawnPoint.position, transform.rotation);
+            var bullet = Instantiate(BulletPrefab, bulletSpawnPoint.position, turret.transform.rotation);
             var bulletRB = bullet.GetComponent<Rigidbody2D>();
             bullet.GetComponent<BulletController>().Damage = powerupStats.BaseCannonDamage;
             bulletRB.AddRelativeForce(new Vector2(0, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
@@ -318,21 +318,19 @@ namespace Assets.Scripts
         [Command]
         private void CmdFireLaser()
         {
-            if (lastShot < ReloadDelay)
-            {
-                // still reloading, do nothing
-                return;
-            }
-
-            var hit = Physics2D.Raycast(bulletSpawnPoint.position, turret.transform.up, 30);
-            RpcLaserEffects(bulletSpawnPoint.position, hit.point);
+            var hit = Physics2D.Raycast(bulletSpawnPoint.position, turret.transform.up, powerupStats.LaserRange, LayerMask.GetMask("Unit", "Terrain"));
             if (hit.collider != null)
             {
+                RpcLaserEffects(bulletSpawnPoint.position, hit.point);
                 var unit = hit.collider.gameObject.GetComponent<Unit>();
                 if (unit != null)
                 {
-                    unit.TakeDamage(50); //TODO: laser damage amount
+                    unit.TakeDamage(powerupStats.LaserDamage); //TODO: laser damage amount
                 }
+            }
+            else
+            {
+                RpcLaserEffects(bulletSpawnPoint.position, bulletSpawnPoint.position + powerupStats.LaserRange * bulletSpawnPoint.up);
             }
         }
 

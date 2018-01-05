@@ -18,7 +18,7 @@ MonoBehaviour:
   EngineRedBlueCost: 0
   EngineGreenBlueCost: 0
   EngineRedGreenBlueCost: 0
-  CannonRedCost: 0
+  CannonRedCost: 0.1
   CannonGreenCost: 0
   CannonBlueCost: 0
   CannonRedGreenCost: 0
@@ -32,5 +32,11 @@ MonoBehaviour:
   ForgeRedBlueCost: 0
   ForgeGreenBlueCost: 0
   ForgeRedGreenBlueCost: 5
+  BaseCannonDamage: 40
+  BaseCannonReloadSpeed: 0.9
+  BaseCannonBulletVelocity: 3
   SelfRepairAmount: 5
   SpeedBoostMultiplier: 2
+  LaserDamage: 20
+  LaserReloadSpeed: 0.4
+  LaserRange: 30
