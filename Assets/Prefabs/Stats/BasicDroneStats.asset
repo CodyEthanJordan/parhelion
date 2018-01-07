@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Name: BasicDroneStats
   m_EditorClassIdentifier: 
   MaxHealth: 40
-  Speed: 200
-  ChaseThreshold: 4
+  Speed: 250
+  ChaseThreshold: 15
   WanderTime: 2
-  GiveUpDistanceThreshold: 5
-  CollisionDamage: 10
+  GiveUpDistanceThreshold: 25
+  CollisionDamage: 20
   CollisionSelfDamage: 100

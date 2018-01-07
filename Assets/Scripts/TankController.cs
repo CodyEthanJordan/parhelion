@@ -46,7 +46,6 @@ namespace Assets.Scripts
 
         private GameObject turret;
         private Transform bulletSpawnPoint;
-        private TurretControl turretControl;
         private LineRenderer lr;
         private Rigidbody2D rb;
         private SpriteRenderer sr;
@@ -60,7 +59,6 @@ namespace Assets.Scripts
             rb = GetComponent<Rigidbody2D>();
             turret = transform.GetChild(0).gameObject; //assume turret is only child
             bulletSpawnPoint = turret.transform.GetChild(0);
-            turretControl = turret.GetComponent<TurretControl>();
             sr = GetComponent<SpriteRenderer>();
             lr = turret.GetComponent<LineRenderer>();
 
