@@ -37,11 +37,11 @@ GameObject:
   - component: {fileID: 114926924482548944}
   - component: {fileID: 212342837786938190}
   - component: {fileID: 95080874643493330}
-  - component: {fileID: 61918659796368918}
   - component: {fileID: 50288164660360742}
   - component: {fileID: 114289117594625616}
   - component: {fileID: 114176008027002866}
   - component: {fileID: 114683991248662430}
+  - component: {fileID: 58456860951004700}
   m_Layer: 10
   m_Name: PlayerTank
   m_TagString: Player
@@ -120,7 +120,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 3
+  m_LinearDrag: 4
   m_AngularDrag: 50
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -128,8 +128,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &61918659796368918
-BoxCollider2D:
+--- !u!58 &58456860951004700
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -140,19 +140,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0017008483, y: 0.022110939}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.9375, y: 0.8125}
-    newSize: {x: 0.9375, y: 0.8125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.64155406, y: 0.7682781}
-  m_EdgeRadius: 0
+  m_Radius: 0.4
 --- !u!95 &95080874643493330
 Animator:
   serializedVersion: 3
@@ -273,7 +263,7 @@ MonoBehaviour:
   Health: 100
   Speed: 25
   MaxHealth: 100
-  RotationSpeed: 9
+  RotationSpeed: 16
   CollectionTime: 1
   TankCapacity: 6
   ReloadDelay: 0.5
