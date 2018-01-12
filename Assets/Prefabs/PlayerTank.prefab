@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
-  Speed: 25
+  Speed: 30
   MaxHealth: 100
   RotationSpeed: 16
   CollectionTime: 1
