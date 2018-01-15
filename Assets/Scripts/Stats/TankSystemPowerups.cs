@@ -38,6 +38,7 @@ namespace Assets.Scripts.Stats
         public float BaseCannonBulletVelocity;
         public GameObject BulletPrefab;
 
+        public GameObject MachineGunPrefab;
         public float MachineGunDamage;
         public float MachineGunReloadSpeed;
 

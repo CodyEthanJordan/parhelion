@@ -209,6 +209,13 @@ namespace Assets.Scripts
                     lastShot = 0f;
                     CmdHealBeam();
                 }
+                else if (SystemActive(TankSystem.Cannon, blue: true, red: false, green: false)
+                    && lastShot >= powerupStats.MachineGunReloadSpeed
+                    && SpendResources(ResourceType.Green, powerupStats.CannonRedCost))
+                {
+                    lastShot = 0f;
+                    CmdMachineGun();
+                }
                 else if (lastShot >= powerupStats.BaseCannonReloadSpeed)
                 {
                     lastShot = 0f;
@@ -289,6 +296,16 @@ namespace Assets.Scripts
 
         }
 
+        private void CmdMachineGun()
+        {
+            lastShot = 0f;
+            var bullet = Instantiate(powerupStats.MachineGunPrefab, bulletSpawnPoint.position, turret.transform.rotation);
+            var bulletRB = bullet.GetComponent<Rigidbody2D>();
+            bullet.GetComponent<BulletController>().Damage = powerupStats.MachineGunDamage;
+            bulletRB.AddRelativeForce(new Vector2(0, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+            NetworkServer.Spawn(bullet);
+        }
+
         [Command]
         private void CmdHealBeam()
         {
@@ -296,7 +313,7 @@ namespace Assets.Scripts
             var bullet = Instantiate(powerupStats.HealSprayPrefab, bulletSpawnPoint.position, turret.transform.rotation);
             var bulletRB = bullet.GetComponent<Rigidbody2D>();
             bullet.GetComponent<BulletController>().Damage = -powerupStats.HealAmount;
-            bulletRB.AddRelativeForce(new Vector2(UnityEngine.Random.Range(-0.5f, 0.5f), powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+            bulletRB.AddRelativeForce(new Vector2(UnityEngine.Random.Range(-powerupStats.BaseCannonBulletVelocity / 2, powerupStats.BaseCannonBulletVelocity / 2), powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
             NetworkServer.Spawn(bullet);
         }
 
@@ -402,6 +419,10 @@ namespace Assets.Scripts
             {
                 Health = MaxHealth;
                 RpcRespawn();
+            }
+            else if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
             }
         }
 

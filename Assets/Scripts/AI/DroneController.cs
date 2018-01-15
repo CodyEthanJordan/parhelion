@@ -51,6 +51,10 @@ namespace Assets.Scripts.AI
             {
                 Destroy(gameObject);
             }
+            else if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
         }
 
         protected override void OnChangedHealth(float currentHealth)
