@@ -27,5 +27,29 @@ namespace Assets.Scripts
 
         protected abstract void OnChangedHealth(float currentHealth);
         public abstract void TakeDamage(float damage);
+
+
+        protected GameObject FindUnit(float distance, Func<GameObject, bool> filter)
+        {
+            var stuff = Physics2D.OverlapCircleAll(this.transform.position, distance, LayerMask.GetMask("Unit"));
+            if (stuff != null && stuff.Length > 0)
+            {
+                var closestFoe = stuff.OrderBy(s => Vector2.Distance(this.transform.position, s.transform.position))
+                .FirstOrDefault(c => filter(c.gameObject));
+
+                if(closestFoe == null)
+                {
+                    return null;
+                }
+
+                return closestFoe.gameObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
     }
+
 }

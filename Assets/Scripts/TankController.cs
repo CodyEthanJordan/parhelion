@@ -57,7 +57,6 @@ namespace Assets.Scripts
 
         private void Awake()
         {
-            Side = Alignment.GoodGuy;
             rb = GetComponent<Rigidbody2D>();
             turret = transform.GetChild(0).gameObject; //assume turret is only child
             bulletSpawnPoint = turret.transform.GetChild(0);
@@ -189,7 +188,7 @@ namespace Assets.Scripts
 
             // move turret
             var mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //turret.transform.LookAt(new Vector3(mosPos.x, mosPos.y, turret.transform.position.z), Vector3.fo);
+
             var faceDirection = mosPos - turret.transform.position;
             turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
 
@@ -271,8 +270,23 @@ namespace Assets.Scripts
                 {
                     CmdSpawnTownPortal();
                 }
+                else if (SystemActive(TankSystem.Forge, blue: true, green: true, red: false)
+                    && (Physics2D.OverlapCircle(mosPos, 0.5f, LayerMask.GetMask("Terrain")) == null
+                    && Physics2D.Raycast(this.transform.position, turret.transform.up, Vector2.Distance(this.transform.position, mosPos), LayerMask.GetMask("Terrain")).collider == null
+                    && SpendResources(powerupStats.ForgeGreenBlueCost, blue: true, green: true, red: false)))
+                {
+                    CmdMakeTurret(mosPos);
+                }
+
             }
 
+        }
+
+        [Command]
+        private void CmdMakeTurret(Vector3 mosPos)
+        {
+            var turret = Instantiate(powerupStats.TurretPrefab, new Vector3(mosPos.x, mosPos.y, 0), Quaternion.identity);
+            NetworkServer.Spawn(turret);
         }
 
         private void ValidateSuffecientResourceCounts()

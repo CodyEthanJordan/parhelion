@@ -22,10 +22,8 @@ namespace Assets.Scripts.AI
 
         private float lastShot = 0f;
 
-
         private void Awake()
         {
-            Side = Alignment.GoodGuy;
             sr = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
         }
@@ -63,25 +61,20 @@ namespace Assets.Scripts.AI
             }
 
             lastShot += Time.deltaTime;
-            var stuff = Physics2D.OverlapCircleAll(this.transform.position, stats.AimDistance, LayerMask.GetMask("Unit"));
-            if (stuff != null && stuff.Length > 0)
+            var closestFoe = FindUnit(stats.AimDistance, u => u.GetComponent<Unit>().Side != this.Side);
+            if (closestFoe != null && lastShot >= stats.ReloadSpeed)
             {
-                var closestFoe = stuff.OrderBy(s => Vector2.Distance(this.transform.position, s.transform.position))
-                .FirstOrDefault(s => s.GetComponent<Unit>().Side != this.Side);
-
-                if (closestFoe != null && lastShot >= stats.ReloadSpeed)
-                {
-                    lastShot = 0;
-                    CmdShootAt(closestFoe.transform.position);
-                }
+                lastShot = 0f;
+                CmdShootAt(closestFoe.transform.position);
             }
+
 
         }
 
         [Command]
         private void CmdShootAt(Vector3 position)
         {
-            Turret.transform.LookAt(Turret.transform.position + Vector3.up, position);
+            Turret.transform.LookAt(Turret.transform.position + Vector3.forward, position - Turret.transform.position);
             var bullet = Instantiate(BulletPrefab, BulletSpawnPoint.transform.position, Turret.transform.rotation);
             var bulletRB = bullet.GetComponent<Rigidbody2D>();
             bullet.GetComponent<BulletController>().Damage = stats.BaseDamage;

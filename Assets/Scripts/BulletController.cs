@@ -35,8 +35,15 @@ namespace Assets.Scripts
             var unit = collision.gameObject.GetComponent<Unit>();
             if(unit != null)
             {
-                Destroy(gameObject);
+                Destroy(this.gameObject);
                 hit.GetComponent<Unit>().TakeDamage(Damage);
+            }
+
+            var otherBullet = collision.gameObject.GetComponent<BulletController>();
+            if(otherBullet != null)
+            {
+                Destroy(this.gameObject);
+                Destroy(hit);
             }
         }
     }

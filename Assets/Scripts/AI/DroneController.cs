@@ -68,15 +68,14 @@ namespace Assets.Scripts.AI
             }
             //Think about what to do
             //state transitions? actions
-            var playerArray = GameObject.FindGameObjectsWithTag("Player");
-            if(playerArray == null || playerArray.Length == 0)
+
+            GameObject target = FindUnit(stats.GiveUpDistanceThreshold,  u => u.GetComponent<Unit>().Side != this.Side);
+
+            float distToClosest = float.PositiveInfinity;
+            if(target != null)
             {
-                return;
+                distToClosest = Vector2.Distance(this.transform.position, target.transform.position);
             }
-            var players = playerArray.ToList();
-            players.OrderBy(p => Vector3.Distance(this.transform.position, p.transform.position));
-            var closestPlayer = players.First();
-            var distToClosest = Vector3.Distance(this.transform.position, closestPlayer.transform.position);
 
             switch(state)
             {
@@ -103,13 +102,14 @@ namespace Assets.Scripts.AI
                         state = DroneState.Wander;
                         break;
                     }
-                    var dirToPlayer = (closestPlayer.transform.position - this.transform.position).normalized;
+                    var dirToPlayer = (target.transform.position - this.transform.position).normalized;
                     xMove = dirToPlayer.x;
                     yMove = dirToPlayer.y;
                 
 
                     break;
             }
+
 
             //actually move
             xMove = Mathf.Clamp(xMove, -1, 1);
@@ -121,7 +121,7 @@ namespace Assets.Scripts.AI
         {
             var hit = collision.gameObject;
             var unit = collision.gameObject.GetComponent<Unit>();
-            if(unit != null && unit.CompareTag("Player"))
+            if(unit != null && unit.Side != this.Side)
             {
                 this.GetComponent<Unit>().TakeDamage(stats.CollisionSelfDamage);
                 hit.GetComponent<Unit>().TakeDamage(stats.CollisionDamage);

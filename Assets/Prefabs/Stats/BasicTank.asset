@@ -30,7 +30,7 @@ MonoBehaviour:
   ForgeBlueCost: 0
   ForgeRedGreenCost: 0
   ForgeRedBlueCost: 0
-  ForgeGreenBlueCost: 0
+  ForgeGreenBlueCost: 3
   ForgeRedGreenBlueCost: 5
   BaseCannonDamage: 40
   BaseCannonReloadSpeed: 0.9
@@ -40,3 +40,5 @@ MonoBehaviour:
   LaserDamage: 20
   LaserReloadSpeed: 0.4
   LaserRange: 30
+  TurretPrefab: {fileID: 1575433071613060, guid: 4c07009292803fa4d83f32b5ef0474e4,
+    type: 2}

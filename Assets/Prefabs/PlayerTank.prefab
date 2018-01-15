@@ -263,6 +263,7 @@ MonoBehaviour:
   Health: 100
   Speed: 30
   MaxHealth: 100
+  Side: 1
   RotationSpeed: 16
   CollectionTime: 1
   TankCapacity: 6

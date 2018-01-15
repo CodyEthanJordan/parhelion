@@ -279,6 +279,7 @@ MonoBehaviour:
   Health: 100
   Speed: 0
   MaxHealth: 100
+  Side: 1
   EtheriumText: {fileID: 114233679461047576}
   Etherium: 0
 --- !u!114 &114783256655860466

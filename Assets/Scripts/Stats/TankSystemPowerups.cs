@@ -42,5 +42,7 @@ namespace Assets.Scripts.Stats
         public float LaserDamage;
         public float LaserReloadSpeed;
         public float LaserRange;
+
+        public GameObject TurretPrefab;
     }
 }
