@@ -48,6 +48,7 @@ namespace Assets.Scripts.Stats
 
         public GameObject RocketPrefab;
         public float RocketAOERadius;
+        public float RocketReloadSpeed;
         public float RocketDamage;
 
         public float DrillBeamReloadSpeed;
@@ -59,6 +60,9 @@ namespace Assets.Scripts.Stats
         public float LaserDamage;
         public float LaserReloadSpeed;
         public float LaserRange;
+
+        public float DeathRayReloadSpeed;
+        public float DeathRayDamage;
 
         public GameObject TurretPrefab;
     }

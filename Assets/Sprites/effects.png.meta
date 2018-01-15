@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 25f4d44894ab79f459ad7fcf103d6206
-timeCreated: 1515999922
+timeCreated: 1516001657
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -157,12 +157,12 @@ TextureImporter:
       name: effects_7
       rect:
         serializedVersion: 2
-        x: 47
+        x: 46
         y: 110
-        width: 2
+        width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,6 +175,20 @@ TextureImporter:
         y: 101
         width: 20
         height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: effects_3
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 110
+        width: 4
+        height: 4
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

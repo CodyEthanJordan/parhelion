@@ -211,10 +211,38 @@ namespace Assets.Scripts
                 }
                 else if (SystemActive(TankSystem.Cannon, blue: true, red: false, green: false)
                     && lastShot >= powerupStats.MachineGunReloadSpeed
-                    && SpendResources(ResourceType.Green, powerupStats.CannonRedCost))
+                    && SpendResources(ResourceType.Green, powerupStats.CannonBlueCost))
                 {
                     lastShot = 0f;
                     CmdMachineGun();
+                }
+                else if (SystemActive(TankSystem.Cannon, blue: false, red: true, green: true)
+                    && lastShot >= powerupStats.RocketReloadSpeed
+                    && SpendResources(powerupStats.CannonRedGreenCost, blue: false, red: true, green: true))
+                {
+                    lastShot = 0f;
+                    CmdFireRocket();
+                }
+                else if (SystemActive(TankSystem.Cannon, blue: true, red: true, green: false)
+                    && lastShot >= powerupStats.BaseCannonReloadSpeed
+                    && SpendResources(powerupStats.CannonRedGreenCost, blue: true, red: true, green: false))
+                {
+                    lastShot = 0f;
+                    CmdTripleShot();
+                }
+                else if (SystemActive(TankSystem.Cannon, blue: true, red: false, green: true)
+                    && lastShot >= powerupStats.DrillBeamReloadSpeed
+                    && SpendResources(powerupStats.CannonRedGreenCost, blue: true, red: false, green: true))
+                {
+                    lastShot = 0f;
+                    CmdDrillBeam();
+                }
+                else if (SystemActive(TankSystem.Cannon, blue: true, red: true, green: true)
+                    && lastShot >= powerupStats.DeathRayReloadSpeed
+                    && SpendResources(powerupStats.CannonRedGreenCost, blue: true, red: true, green: true))
+                {
+                    lastShot = 0f;
+                    CmdDeathRay();
                 }
                 else if (lastShot >= powerupStats.BaseCannonReloadSpeed)
                 {
@@ -294,6 +322,36 @@ namespace Assets.Scripts
 
             }
 
+        }
+
+        private void CmdDeathRay()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CmdDrillBeam()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command]
+        private void CmdTripleShot()
+        {
+            lastShot = 0f;
+            for (int i = -1; i < 2; i++)
+            {
+                var bullet = Instantiate(powerupStats.BulletPrefab, bulletSpawnPoint.position + i*turret.transform.right, turret.transform.rotation);
+                var bulletRB = bullet.GetComponent<Rigidbody2D>();
+                bullet.GetComponent<BulletController>().Damage = powerupStats.BaseCannonDamage;
+                bulletRB.AddRelativeForce(new Vector2(i*powerupStats.BaseCannonBulletVelocity/4, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+                NetworkServer.Spawn(bullet);
+            }
+            
+        }
+
+        private void CmdFireRocket()
+        {
+            throw new NotImplementedException();
         }
 
         private void CmdMachineGun()
