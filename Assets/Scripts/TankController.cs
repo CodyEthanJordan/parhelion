@@ -35,7 +35,7 @@ namespace Assets.Scripts
         public float TankCapacity = 6;
         public float ReloadDelay = 0.5f;
         public GameObject BulletPrefab;
-    
+
 
         [SerializeField] private TankSystemPowerups powerupStats;
 
@@ -183,15 +183,28 @@ namespace Assets.Scripts
                 Health = Math.Min(MaxHealth, Health + Time.deltaTime * powerupStats.SelfRepairAmount);
             }
 
-            rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
-            rb.AddTorque(-x, ForceMode2D.Impulse);
+            // POWERUP: hovertank
+            if (SystemActive(TankSystem.Engine, blue: true, red: true, green: true)
+                && SpendResources(Time.deltaTime * powerupStats.EngineRedGreenBlueCost, blue: true, red: true, green: true))
+            {
+
+                var y = Input.GetAxis("Vertical") * Time.deltaTime * powerupStats.HoverSpeed;
+                x = Input.GetAxis("Horizontal") * Time.deltaTime * powerupStats.HoverSpeed;
+                rb.AddForce(new Vector2(x, y), ForceMode2D.Force);
+            }
+            else
+            {
+                //regular movement
+                rb.AddRelativeForce(new Vector2(0, z), ForceMode2D.Impulse);
+                rb.AddTorque(-x, ForceMode2D.Impulse);
+            }
+
 
             // move turret
             var mosPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             var faceDirection = mosPos - turret.transform.position;
             turret.transform.LookAt(turret.transform.position + Vector3.forward, new Vector3(faceDirection.x, faceDirection.y, turret.transform.position.z));
-
 
             if (Input.GetMouseButton(0)) //fire the lasers!
             {
@@ -244,7 +257,8 @@ namespace Assets.Scripts
                     lastShot = 0f;
                     CmdDeathRay();
                 }
-                else if (lastShot >= powerupStats.BaseCannonReloadSpeed)
+                else if (SystemActive(TankSystem.Cannon, blue: false, red: false, green: false)
+                    && lastShot >= powerupStats.BaseCannonReloadSpeed)
                 {
                     lastShot = 0f;
                     CmdFire();
@@ -252,6 +266,7 @@ namespace Assets.Scripts
 
             }
 
+            #region System Button Input Processing
             if (Input.GetButtonDown("BlueEngine"))
             {
                 SystemGrid[ResourceType.Blue][TankSystem.Engine] = !SystemGrid[ResourceType.Blue][TankSystem.Engine];
@@ -297,6 +312,7 @@ namespace Assets.Scripts
                 SystemGrid[ResourceType.Green][TankSystem.Forge] = !SystemGrid[ResourceType.Green][TankSystem.Forge];
                 uiController.UpdateSystemDisplay(SystemGrid);
             }
+            #endregion
 
             // use forge
             if (Input.GetButtonDown("UseForge") || Input.GetMouseButtonDown(1))
@@ -324,14 +340,36 @@ namespace Assets.Scripts
 
         }
 
+        #region Cannon Commands
+        [Command]
         private void CmdDeathRay()
         {
-            throw new NotImplementedException();
+            ShootLaser(powerupStats.DeathRayRange, powerupStats.DeathRayDamage, 0.33f, Color.magenta);
         }
 
+        [Command]
         private void CmdDrillBeam()
         {
-            throw new NotImplementedException();
+            ShootLaser(powerupStats.DrillBeamRange, powerupStats.DrillBeamDamage, 0.22f, Color.blue);
+        }
+
+        [Server]
+        private void ShootLaser(float range, float damage, float width, Color color)
+        {
+            var hit = Physics2D.Raycast(bulletSpawnPoint.position, turret.transform.up, range, LayerMask.GetMask("Unit", "Terrain"));
+            if (hit.collider != null)
+            {
+                RpcLaserEffects(bulletSpawnPoint.position, hit.point, color, width);
+                var unit = hit.collider.gameObject.GetComponent<Unit>();
+                if (unit != null)
+                {
+                    unit.TakeDamage(damage); //TODO: laser damage amount
+                }
+            }
+            else
+            {
+                RpcLaserEffects(bulletSpawnPoint.position, bulletSpawnPoint.position + range * bulletSpawnPoint.up, color, width);
+            }
         }
 
         [Command]
@@ -340,20 +378,28 @@ namespace Assets.Scripts
             lastShot = 0f;
             for (int i = -1; i < 2; i++)
             {
-                var bullet = Instantiate(powerupStats.BulletPrefab, bulletSpawnPoint.position + i*turret.transform.right, turret.transform.rotation);
+                var bullet = Instantiate(powerupStats.BulletPrefab, bulletSpawnPoint.position + i * turret.transform.right, turret.transform.rotation);
                 var bulletRB = bullet.GetComponent<Rigidbody2D>();
                 bullet.GetComponent<BulletController>().Damage = powerupStats.BaseCannonDamage;
-                bulletRB.AddRelativeForce(new Vector2(i*powerupStats.BaseCannonBulletVelocity/4, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+                bulletRB.AddRelativeForce(new Vector2(i * powerupStats.BaseCannonBulletVelocity / 4, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
                 NetworkServer.Spawn(bullet);
             }
-            
+
         }
 
+        [Command]
         private void CmdFireRocket()
         {
-            throw new NotImplementedException();
+            var bullet = Instantiate(powerupStats.RocketPrefab, bulletSpawnPoint.position, turret.transform.rotation);
+            var bulletRB = bullet.GetComponent<Rigidbody2D>();
+            var rocketScript = bullet.GetComponent<RocketController>();
+            rocketScript.Damage = powerupStats.RocketDamage;
+            rocketScript.AOERadius = powerupStats.RocketAOERadius;
+            bulletRB.AddRelativeForce(new Vector2(0, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+            NetworkServer.Spawn(bullet);
         }
 
+        [Command]
         private void CmdMachineGun()
         {
             lastShot = 0f;
@@ -375,12 +421,60 @@ namespace Assets.Scripts
             NetworkServer.Spawn(bullet);
         }
 
+
+
+        [Command]
+        private void CmdFire()
+        {
+            lastShot = 0f;
+            var bullet = Instantiate(powerupStats.BulletPrefab, bulletSpawnPoint.position, turret.transform.rotation);
+            var bulletRB = bullet.GetComponent<Rigidbody2D>();
+            bullet.GetComponent<BulletController>().Damage = powerupStats.BaseCannonDamage;
+            bulletRB.AddRelativeForce(new Vector2(0, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+            NetworkServer.Spawn(bullet);
+        }
+
+        [Command]
+        private void CmdFireLaser()
+        {
+            ShootLaser(powerupStats.LaserRange, powerupStats.LaserDamage, 0.11f, Color.red);
+        }
+
+        [ClientRpc]
+        private void RpcLaserEffects(Vector3 start, Vector3 end, Color color, float width)
+        {
+            lr.startColor = color;
+            lr.endColor = color;
+            lr.startWidth = width;
+            lr.endWidth = width;
+            lr.enabled = true;
+            lr.SetPosition(0, start);
+            lr.SetPosition(1, end);
+            StartCoroutine(DisableLaser(0.1f));
+        }
+        #endregion
+
+        #region Forge Commands
         [Command]
         private void CmdMakeTurret(Vector3 mosPos)
         {
             var turret = Instantiate(powerupStats.TurretPrefab, new Vector3(mosPos.x, mosPos.y, 0), Quaternion.identity);
             NetworkServer.Spawn(turret);
         }
+
+        [Command]
+        void CmdSpawnTownPortal()
+        {
+            var portal = Instantiate(TownPortalPrefab, this.transform.position, Quaternion.identity);
+            NetworkServer.Spawn(portal);
+        }
+
+        [ClientRpc]
+        public void RpcTeleportTo(Vector3 pos)
+        {
+            this.transform.position = pos;
+        }
+        #endregion
 
         private void ValidateSuffecientResourceCounts()
         {
@@ -411,45 +505,6 @@ namespace Assets.Scripts
             }
         }
 
-        [Command]
-        private void CmdFire()
-        {
-            lastShot = 0f;
-            var bullet = Instantiate(powerupStats.BulletPrefab, bulletSpawnPoint.position, turret.transform.rotation);
-            var bulletRB = bullet.GetComponent<Rigidbody2D>();
-            bullet.GetComponent<BulletController>().Damage = powerupStats.BaseCannonDamage;
-            bulletRB.AddRelativeForce(new Vector2(0, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
-            NetworkServer.Spawn(bullet);
-        }
-
-        [Command]
-        private void CmdFireLaser()
-        {
-            var hit = Physics2D.Raycast(bulletSpawnPoint.position, turret.transform.up, powerupStats.LaserRange, LayerMask.GetMask("Unit", "Terrain"));
-            if (hit.collider != null)
-            {
-                RpcLaserEffects(bulletSpawnPoint.position, hit.point);
-                var unit = hit.collider.gameObject.GetComponent<Unit>();
-                if (unit != null)
-                {
-                    unit.TakeDamage(powerupStats.LaserDamage); //TODO: laser damage amount
-                }
-            }
-            else
-            {
-                RpcLaserEffects(bulletSpawnPoint.position, bulletSpawnPoint.position + powerupStats.LaserRange * bulletSpawnPoint.up);
-            }
-        }
-
-
-        [ClientRpc]
-        private void RpcLaserEffects(Vector3 start, Vector3 end)
-        {
-            lr.enabled = true;
-            lr.SetPosition(0, start);
-            lr.SetPosition(1, end);
-            StartCoroutine(DisableLaser(0.1f));
-        }
 
         private IEnumerator DisableLaser(float seconds)
         {
@@ -457,12 +512,6 @@ namespace Assets.Scripts
             lr.enabled = false;
         }
 
-        [Command]
-        void CmdSpawnTownPortal()
-        {
-            var portal = Instantiate(TownPortalPrefab, this.transform.position, Quaternion.identity);
-            NetworkServer.Spawn(portal);
-        }
 
         public override void TakeDamage(float amount)
         {
@@ -497,6 +546,11 @@ namespace Assets.Scripts
             {
                 // move back to zero location
                 transform.position = Vector3.zero;
+                foreach (var resource in ResourceTanks)
+                {
+                    ResourceTanks[resource.Key] = 0;
+                }
+                ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
             }
         }
 
@@ -509,13 +563,6 @@ namespace Assets.Scripts
                 ResourcesChanged.Invoke(ResourceTanks, TankCapacity);
             }
         }
-
-        [ClientRpc]
-        public void RpcTeleportTo(Vector3 pos)
-        {
-            this.transform.position = pos;
-        }
-
 
         private bool IsFull(ResourceType r)
         {

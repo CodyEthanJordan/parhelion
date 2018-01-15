@@ -17,7 +17,7 @@ MonoBehaviour:
   EngineRedGreenCost: 0
   EngineRedBlueCost: 0
   EngineGreenBlueCost: 0
-  EngineRedGreenBlueCost: 0
+  EngineRedGreenBlueCost: 0.1
   CannonRedCost: 0.1
   CannonGreenCost: 0
   CannonBlueCost: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     type: 2}
   MachineGunPrefab: {fileID: 1481140305490440, guid: 455364b9b2ffa23499a68a2e32fa9ed1,
     type: 2}
-  MachineGunDamage: 1
+  MachineGunDamage: 10
   MachineGunReloadSpeed: 0.1
   HealSprayPrefab: {fileID: 1481140305490440, guid: 370db167a3535f84d85cc76ac47ad5af,
     type: 2}
@@ -48,14 +48,19 @@ MonoBehaviour:
   RocketPrefab: {fileID: 1481140305490440, guid: 1b3ce05ddd61d9a45a0d42da8936fd51,
     type: 2}
   RocketAOERadius: 0
+  RocketReloadSpeed: 0
   RocketDamage: 0
-  DrillBeamReloadSpeed: 0
-  DrillBeamDamage: 0
-  DrillBeamRange: 0
+  DrillBeamReloadSpeed: 0.1
+  DrillBeamDamage: 10
+  DrillBeamRange: 2
   SelfRepairAmount: 5
   SpeedBoostMultiplier: 2
   LaserDamage: 20
   LaserReloadSpeed: 0.4
   LaserRange: 30
+  DeathRayReloadSpeed: 0
+  DeathRayDamage: 0
+  DeathRayRange: 0
   TurretPrefab: {fileID: 1575433071613060, guid: 4c07009292803fa4d83f32b5ef0474e4,
     type: 2}
+  HoverSpeed: 2000

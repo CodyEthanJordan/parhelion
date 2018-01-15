@@ -63,7 +63,9 @@ namespace Assets.Scripts.Stats
 
         public float DeathRayReloadSpeed;
         public float DeathRayDamage;
+        public float DeathRayRange;
 
         public GameObject TurretPrefab;
+        public float HoverSpeed;
     }
 }
