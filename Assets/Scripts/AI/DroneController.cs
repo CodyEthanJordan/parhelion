@@ -26,10 +26,10 @@ namespace Assets.Scripts.AI
         private float yMove = 0f;
         public DroneStats stats;
 
-        private void Awake()
+        public override void Awake()
         {
+            base.Awake();
             Side = Alignment.BadGuys;
-            sr = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
         }
 
@@ -38,29 +38,7 @@ namespace Assets.Scripts.AI
             Health = stats.MaxHealth;
         }
 
-        public override void TakeDamage(float damage)
-        {
-            if (!isServer)
-            {
-                return;
-            }
-
-            Health -= damage;
-
-            if (Health <= 0)
-            {
-                Destroy(gameObject);
-            }
-            else if (Health > MaxHealth)
-            {
-                Health = MaxHealth;
-            }
-        }
-
-        protected override void OnChangedHealth(float currentHealth)
-        {
-            sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth);
-        }
+       
 
         private float wanderTimer = 0f;
 

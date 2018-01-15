@@ -24,10 +24,36 @@ namespace Assets.Scripts
         public float MaxHealth = 100.0f;
         public Alignment Side;
 
+        private SpriteRenderer sr;
 
-        protected abstract void OnChangedHealth(float currentHealth);
-        public abstract void TakeDamage(float damage);
+        public virtual void Awake()
+        {
+            sr = GetComponent<SpriteRenderer>();
+        }
 
+        public virtual void TakeDamage(float damage)
+        {
+            if (!isServer)
+            {
+                return;
+            }
+
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+        }
+
+        protected virtual void OnChangedHealth(float currentHealth)
+        {
+            sr.color = new Color(1, currentHealth / MaxHealth, currentHealth / MaxHealth);
+        }
 
         protected GameObject FindUnit(float distance, Func<GameObject, bool> filter)
         {
