@@ -202,6 +202,13 @@ namespace Assets.Scripts
                     lastShot = 0f;
                     CmdFireLaser();
                 }
+                else if (SystemActive(TankSystem.Cannon, blue: false, red: false, green: true)
+                    && lastShot >= powerupStats.HealSprayReloadTime
+                    && SpendResources(ResourceType.Green, powerupStats.CannonGreenCost))
+                {
+                    lastShot = 0f;
+                    CmdHealBeam();
+                }
                 else if (lastShot >= powerupStats.BaseCannonReloadSpeed)
                 {
                     lastShot = 0f;
@@ -283,6 +290,17 @@ namespace Assets.Scripts
         }
 
         [Command]
+        private void CmdHealBeam()
+        {
+            lastShot = 0f;
+            var bullet = Instantiate(powerupStats.HealSprayPrefab, bulletSpawnPoint.position, turret.transform.rotation);
+            var bulletRB = bullet.GetComponent<Rigidbody2D>();
+            bullet.GetComponent<BulletController>().Damage = -powerupStats.HealAmount;
+            bulletRB.AddRelativeForce(new Vector2(UnityEngine.Random.Range(-0.5f, 0.5f), powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);
+            NetworkServer.Spawn(bullet);
+        }
+
+        [Command]
         private void CmdMakeTurret(Vector3 mosPos)
         {
             var turret = Instantiate(powerupStats.TurretPrefab, new Vector3(mosPos.x, mosPos.y, 0), Quaternion.identity);
@@ -322,7 +340,7 @@ namespace Assets.Scripts
         private void CmdFire()
         {
             lastShot = 0f;
-            var bullet = Instantiate(BulletPrefab, bulletSpawnPoint.position, turret.transform.rotation);
+            var bullet = Instantiate(powerupStats.BulletPrefab, bulletSpawnPoint.position, turret.transform.rotation);
             var bulletRB = bullet.GetComponent<Rigidbody2D>();
             bullet.GetComponent<BulletController>().Damage = powerupStats.BaseCannonDamage;
             bulletRB.AddRelativeForce(new Vector2(0, powerupStats.BaseCannonBulletVelocity), ForceMode2D.Impulse);

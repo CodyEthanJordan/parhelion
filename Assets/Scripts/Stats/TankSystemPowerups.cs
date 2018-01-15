@@ -36,6 +36,22 @@ namespace Assets.Scripts.Stats
         public float BaseCannonDamage;
         public float BaseCannonReloadSpeed;
         public float BaseCannonBulletVelocity;
+        public GameObject BulletPrefab;
+
+        public float MachineGunDamage;
+        public float MachineGunReloadSpeed;
+
+        public GameObject HealSprayPrefab;
+        public float HealAmount;
+        public float HealSprayReloadTime;
+
+        public GameObject RocketPrefab;
+        public float RocketAOERadius;
+        public float RocketDamage;
+
+        public float DrillBeamReloadSpeed;
+        public float DrillBeamDamage;
+        public float DrillBeamRange;
 
         public float SelfRepairAmount;
         public float SpeedBoostMultiplier;
