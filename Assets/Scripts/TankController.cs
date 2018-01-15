@@ -35,6 +35,7 @@ namespace Assets.Scripts
         public float TankCapacity = 6;
         public float ReloadDelay = 0.5f;
         public GameObject BulletPrefab;
+    
 
         [SerializeField] private TankSystemPowerups powerupStats;
 
@@ -56,6 +57,7 @@ namespace Assets.Scripts
 
         private void Awake()
         {
+            Side = Alignment.GoodGuy;
             rb = GetComponent<Rigidbody2D>();
             turret = transform.GetChild(0).gameObject; //assume turret is only child
             bulletSpawnPoint = turret.transform.GetChild(0);

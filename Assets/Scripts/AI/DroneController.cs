@@ -28,6 +28,7 @@ namespace Assets.Scripts.AI
 
         private void Awake()
         {
+            Side = Alignment.BadGuys;
             sr = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
         }

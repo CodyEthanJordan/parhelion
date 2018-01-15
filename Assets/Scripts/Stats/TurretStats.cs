@@ -11,10 +11,7 @@ namespace Assets.Scripts.Stats
     [CreateAssetMenu(menuName = "parhelion/EnemyStats/TurretType")]
     class TurretStats : EnemyStats
     {
-        public float ChaseThreshold;
-        public float WanderTime;
-        public float GiveUpDistanceThreshold;
-        public float CollisionDamage;
-        public float CollisionSelfDamage;
+        public float AimDistance;
+        public float ReloadSpeed;
     }
 }
