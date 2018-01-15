@@ -19,14 +19,13 @@ namespace Assets.Scripts.AI
 
     class DroneController : Unit
     {
-        private SpriteRenderer sr;
         private Rigidbody2D rb;
         [SerializeField] private DroneState state = DroneState.Wander;
         private float xMove = 0f;
         private float yMove = 0f;
         public DroneStats stats;
 
-        public override void Awake()
+        protected override void Awake()
         {
             base.Awake();
             Side = Alignment.BadGuys;

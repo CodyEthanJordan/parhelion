@@ -24,9 +24,9 @@ namespace Assets.Scripts
         public float MaxHealth = 100.0f;
         public Alignment Side;
 
-        private SpriteRenderer sr;
+        protected SpriteRenderer sr;
 
-        public virtual void Awake()
+        protected virtual void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
         }
@@ -63,7 +63,7 @@ namespace Assets.Scripts
                 var closestFoe = stuff.OrderBy(s => Vector2.Distance(this.transform.position, s.transform.position))
                 .FirstOrDefault(c => filter(c.gameObject));
 
-                if(closestFoe == null)
+                if (closestFoe == null)
                 {
                     return null;
                 }
@@ -75,7 +75,5 @@ namespace Assets.Scripts
                 return null;
             }
         }
-
     }
-
 }

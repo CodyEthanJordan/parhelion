@@ -12,7 +12,6 @@ namespace Assets.Scripts.AI
 {
     class TurretController : Unit
     {
-        private SpriteRenderer sr;
         private Rigidbody2D rb;
 
         public GameObject Turret;
@@ -22,9 +21,9 @@ namespace Assets.Scripts.AI
 
         private float lastShot = 0f;
 
-        private void Awake()
+        protected override void Awake()
         {
-            sr = GetComponent<SpriteRenderer>();
+            base.Awake();
             rb = GetComponent<Rigidbody2D>();
         }
 

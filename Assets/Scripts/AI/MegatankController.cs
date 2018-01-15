@@ -9,9 +9,8 @@ using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts.AI
 {
-    class AntController : Unit
+    class MegatankController : Unit
     {
-        public Tilemap walls;
 
         private void Start()
         {
@@ -20,7 +19,6 @@ namespace Assets.Scripts.AI
 
         private void Update()
         {
-
         }
     }
 }

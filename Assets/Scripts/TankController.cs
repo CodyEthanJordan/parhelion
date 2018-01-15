@@ -49,7 +49,6 @@ namespace Assets.Scripts
         private Transform bulletSpawnPoint;
         private LineRenderer lr;
         private Rigidbody2D rb;
-        private SpriteRenderer sr;
         private float timeOnResource = 0f;
         private float lastShot;
 
@@ -68,12 +67,12 @@ namespace Assets.Scripts
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             rb = GetComponent<Rigidbody2D>();
             turret = transform.GetChild(0).gameObject; //assume turret is only child
             bulletSpawnPoint = turret.transform.GetChild(0);
-            sr = GetComponent<SpriteRenderer>();
             lr = turret.GetComponent<LineRenderer>();
 
             HPChanged = new UnityFloatEvent();
