@@ -31,6 +31,9 @@ namespace Assets.Scripts.UI
         public Image RedForge;
         public Image GreenForge;
 
+        public float ScannerIndicatorRadius;
+        public Text BaseScannerPointer;
+
         public void HPUpdate(float hp, float maxHP)
         {
             HP.text = "HP: " + hp.ToString("N0") + "/" + maxHP;
@@ -82,7 +85,16 @@ namespace Assets.Scripts.UI
             ForgeText.text = PowerupNames[TankSystem.Forge][forgeName];
         }
 
+        public void DirectionToBase(Vector2 direction)
+        {
+            BaseScannerPointer.GetComponent<Text>().enabled = true;
+            BaseScannerPointer.GetComponent<RectTransform>().anchoredPosition = ScannerIndicatorRadius * direction;
+        }
 
+        public void DisableScanner()
+        {
+            BaseScannerPointer.enabled = false;
+        }
     }
 }
 

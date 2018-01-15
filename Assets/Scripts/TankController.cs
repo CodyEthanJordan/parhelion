@@ -55,6 +55,19 @@ namespace Assets.Scripts
 
         private UIController uiController;
 
+        private GameObject _homeBase;
+        private GameObject HomeBase
+        {
+            get
+            {
+                if(_homeBase == null)
+                {
+                    _homeBase = GameObject.Find("HomeBase");
+                }
+                return _homeBase;
+            }
+        }
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -167,6 +180,20 @@ namespace Assets.Scripts
 
             var x = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
             var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
+
+            // POWERUP: scanner
+            if (SystemActive(TankSystem.Engine, blue: true, red: false, green: false)
+               && SpendResources(ResourceType.Blue, Time.deltaTime * powerupStats.EngineBlueCost))
+            {
+                var directionToBase = (HomeBase.transform.position - this.transform.position).normalized;
+                Debug.Log(directionToBase);
+                uiController.DirectionToBase(directionToBase);
+            }
+            else
+            {
+                //disable overlay
+                uiController.DisableScanner();
+            }
 
             // POWERUP: speed boost
             if (SystemActive(TankSystem.Engine, blue: false, red: true, green: false)
