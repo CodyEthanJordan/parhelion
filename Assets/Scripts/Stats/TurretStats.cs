@@ -13,5 +13,7 @@ namespace Assets.Scripts.Stats
     {
         public float AimDistance;
         public float ReloadSpeed;
+        public float BaseDamage;
+        public float BaseCannonBulletVelocity;
     }
 }

@@ -15,3 +15,5 @@ MonoBehaviour:
   Speed: 0
   AimDistance: 10
   ReloadSpeed: 1
+  BaseDamage: 10
+  BaseCannonBulletVelocity: 1

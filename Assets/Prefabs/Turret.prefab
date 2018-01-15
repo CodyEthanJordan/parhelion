@@ -217,7 +217,7 @@ MonoBehaviour:
   MaxHealth: 100
   Side: 0
   Turret: {fileID: 1775614919851668}
-  ShootPoint: {fileID: 1042133971347626}
+  BulletSpawnPoint: {fileID: 1042133971347626}
   BulletPrefab: {fileID: 1481140305490440, guid: 228b81bf8d127314eb4cd332adbcd4ff,
     type: 2}
   stats: {fileID: 11400000, guid: ce7f0da71627f8f469f9af5b3b1ad960, type: 2}
