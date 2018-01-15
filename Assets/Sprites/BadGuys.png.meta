@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 16624ac8560200344a2b44a588229d81
-timeCreated: 1515990117
+timeCreated: 1516000535
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -97,12 +97,12 @@ TextureImporter:
       name: BadGuys_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 8
         y: 40
-        width: 24
+        width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -116,7 +116,7 @@ TextureImporter:
         width: 18
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -130,7 +130,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -35,6 +35,21 @@ MonoBehaviour:
   BaseCannonDamage: 40
   BaseCannonReloadSpeed: 0.9
   BaseCannonBulletVelocity: 3
+  BulletPrefab: {fileID: 1481140305490440, guid: 228b81bf8d127314eb4cd332adbcd4ff,
+    type: 2}
+  MachineGunDamage: 1
+  MachineGunReloadSpeed: 0.1
+  HealSprayPrefab: {fileID: 1226606314709630, guid: c946005e146f0c0469cafc91c77c39fd,
+    type: 2}
+  HealAmount: 10
+  HealSprayReloadTime: 0.5
+  RocketPrefab: {fileID: 1307162263772172, guid: 38926491220b3324288fe92dbb942af4,
+    type: 2}
+  RocketAOERadius: 0
+  RocketDamage: 0
+  DrillBeamReloadSpeed: 0
+  DrillBeamDamage: 0
+  DrillBeamRange: 0
   SelfRepairAmount: 5
   SpeedBoostMultiplier: 2
   LaserDamage: 20
